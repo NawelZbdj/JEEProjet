@@ -2,15 +2,6 @@ CREATE DATABASE IF NOT EXISTS university;
 USE university;
 
 
-CREATE TABLE IF NOT EXISTS Users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    role VARCHAR(50) NOT NULL,  -- Can be 'admin', 'professor', 'student', etc.
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-
 CREATE TABLE IF NOT EXISTS Account (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(100) NOT NULL UNIQUE,
@@ -26,7 +17,8 @@ CREATE TABLE IF NOT EXISTS Administrator (
     birth_date DATE,
     position VARCHAR(100),
     email VARCHAR(100),
-    FOREIGN KEY (id) REFERENCES Account(id) ON DELETE CASCADE
+    account_id INT,
+    FOREIGN KEY (account_id) REFERENCES Account(id) ON DELETE CASCADE
 );
 
 
@@ -37,7 +29,8 @@ CREATE TABLE IF NOT EXISTS Professor (
     birth_date DATE,
     specialty VARCHAR(100),
     email VARCHAR(100),
-    FOREIGN KEY (id) REFERENCES Account(id) ON DELETE CASCADE
+    account_id INT,
+    FOREIGN KEY (account_id) REFERENCES Account(id) ON DELETE CASCADE
 );
 
 
@@ -47,7 +40,8 @@ CREATE TABLE IF NOT EXISTS Student (
     first_name VARCHAR(100),
     birth_date DATE,
     email VARCHAR(100),
-    FOREIGN KEY (id) REFERENCES Account(id) ON DELETE CASCADE
+    account_id INT,
+    FOREIGN KEY (account_id) REFERENCES Account(id) ON DELETE CASCADE
 );
 
 
@@ -58,13 +52,21 @@ CREATE TABLE IF NOT EXISTS Course (
     credit DOUBLE
 );
 
+create table if not exists Registration (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    registration_date DATE,
+	student_id INT,
+    course_id INT,
+    professor_id INT,
+	FOREIGN KEY (student_id) REFERENCES Student(id) ON DELETE CASCADE,
+    FOREIGN KEY (course_id) REFERENCES Course(id) ON DELETE CASCADE,
+	FOREIGN KEY (professor_id) REFERENCES Professor(id) ON DELETE CASCADE
+);
 
 CREATE TABLE IF NOT EXISTS Result (
     id INT AUTO_INCREMENT PRIMARY KEY,
     grade DOUBLE NOT NULL,
     coefficient DOUBLE NOT NULL,
-    student_id INT,
-    course_id INT,
-    FOREIGN KEY (student_id) REFERENCES Student(id) ON DELETE CASCADE,
-    FOREIGN KEY (course_id) REFERENCES Course(id) ON DELETE CASCADE
-);
+    registration_id INT,
+    FOREIGN KEY (registration_id) REFERENCES Registration(id) ON DELETE CASCADE
+    );
