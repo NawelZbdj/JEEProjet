@@ -4,6 +4,7 @@ public class Result {
     private int id;
     private double grade;
     private double coefficient;
+    private Registration registration;
 
 
     public Result(){
@@ -24,6 +25,12 @@ public class Result {
         return coefficient;
     }
 
+    public Registration getRegistration() {
+        return registration;
+    }
+
+
+
 
     //Setters
     public void setId(int id) {
@@ -37,4 +44,9 @@ public class Result {
     public void setCoefficient(double coefficient) {
         this.coefficient = coefficient;
     }
+
+    public void setRegistration(Registration registration) {
+        this.registration = registration;
+    }
+
 }

@@ -10,6 +10,7 @@ public class Professor implements IUser {
     private Date birthDate;
     private String specialty;
     private String email;
+    private Account account;
 
     public Professor(){
 
@@ -45,6 +46,9 @@ public class Professor implements IUser {
     public String getEmail() {
         return email;
     }
+    public Account getAccount() {
+        return account;
+    }
 
 
     //Setters
@@ -78,4 +82,8 @@ public class Professor implements IUser {
     public void setEmail(String email) {
         this.email = email;
     }
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
 }

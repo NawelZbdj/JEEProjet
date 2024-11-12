@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.jeeproject.Model.Result" table="result">
+        <id name="id" column="id" type="int">
+            <generator class="increment"/>
+        </id>
+        <property name="grade" column="grade" type="double" not-null="true"/>
+        <property name="coefficient" column="coefficient" type="double" not-null="true"/>
+        <many-to-one name="registration" class="com.jeeproject.Model.Registration" column="registration_id" not-null="true"/>
+
+
+    </class>
+</hibernate-mapping>
