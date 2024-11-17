@@ -1,6 +1,5 @@
 CREATE DATABASE IF NOT EXISTS university;
-USE university;
-
+use university;
 
 CREATE TABLE IF NOT EXISTS Account (
                                        id INT AUTO_INCREMENT PRIMARY KEY,
@@ -49,7 +48,8 @@ CREATE TABLE IF NOT EXISTS Course (
                                       id INT AUTO_INCREMENT PRIMARY KEY,
                                       title VARCHAR(255) NOT NULL,
                                       description TEXT,
-                                      credit DOUBLE
+                                      credit DOUBLE,
+                                      speciality VARCHAR(100)
 );
 
 create table if not exists Registration (

@@ -5,6 +5,7 @@ public class Course {
     private String title;
     private String description;
     private double credit;
+    private String speciality;
 
 
     public Course(){
@@ -30,6 +31,8 @@ public class Course {
         return credit;
     }
 
+    public String getSpeciality(){ return speciality;}
+
 
     //Setters
     public void setId(int id) {
@@ -47,4 +50,6 @@ public class Course {
     public void setCredit(double credit) {
         this.credit = credit;
     }
+
+    public void setSpeciality(String speciality) {this.speciality = speciality;}
 }

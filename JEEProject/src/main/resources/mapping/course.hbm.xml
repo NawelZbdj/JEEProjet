@@ -9,6 +9,8 @@
         <property name="title" column="title" type="string"/>
         <property name="description" column="description" type="string"/>
         <property name="credit" column="credit" type="double"/>
-        
+        <property name="speciality" column="speciality" type="string"/>
+
+
     </class>
 </hibernate-mapping>
