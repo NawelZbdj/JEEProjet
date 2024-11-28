@@ -3,9 +3,11 @@ package com.jeeproject.Controller;
 import com.jeeproject.DAO.CourseDAO;
 import com.jeeproject.DAO.ProfessorDAO;
 import com.jeeproject.DAO.RegistrationDAO;
+import com.jeeproject.DAO.StudentDAO;
 import com.jeeproject.Model.Course;
 import com.jeeproject.Model.Professor;
 import com.jeeproject.Model.Registration;
+import com.jeeproject.Model.Student;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,17 +15,22 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "RegistrationController", value = "/RegistrationController")
 public class RegistrationController extends HttpServlet {
     private RegistrationDAO registrationDAO;
     private ProfessorDAO professorDAO;
+    private CourseDAO courseDAO;
+    private StudentDAO studentDAO;
 
     @Override
     public void init() throws ServletException {
         registrationDAO = new RegistrationDAO();
         professorDAO = new ProfessorDAO();
+        courseDAO = new CourseDAO();
+        studentDAO = new StudentDAO();
     }
 
     @Override
@@ -37,6 +44,18 @@ public class RegistrationController extends HttpServlet {
                     break;
                 case "listall":
                     listRegistrationsAndProfessors(request,response);
+                    break;
+                case "listByStudent":
+                    listRegistrationsByStudent(request,response);
+                    break;
+                case "listByStudentWithCourses":
+                    listRegistrationsByStudentWithCourses(request,response);
+                    break;
+                case "delete":
+                    deleteRegistration(request,response);
+                    break;
+                case "add":
+                    addRegistration(request,response);
                     break;
                 default :
                     break;
@@ -90,7 +109,6 @@ public class RegistrationController extends HttpServlet {
             }
         }
         response.sendRedirect(request.getContextPath() + "/RegistrationController?action=listall&destination=/views/admin/CourseAssignment.jsp");
-
     }
 
 
@@ -122,10 +140,50 @@ public class RegistrationController extends HttpServlet {
             } else {
                 request.getRequestDispatcher(destination).forward(request, response);
             }
+    }
 
+    private void listRegistrationsByStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Registration> registrationList = registrationDAO.getRegistrationsByStudent(1);
+        request.setAttribute("registrations",registrationList);
+
+        String destination = request.getParameter("destination");
+        request.getRequestDispatcher(destination).forward(request, response);
     }
 
 
+    private void deleteRegistration(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Registration registration = registrationDAO.getRegistrationById(id);
+        registrationDAO.deleteRegistration(registration);
+        response.sendRedirect(request.getContextPath() + "/views/student/RegistrationManagement.jsp");
+    }
 
+    private void listRegistrationsByStudentWithCourses(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int studentId = 1;        //a remplacer par l'id selon session!!!!
 
-}
+        List<Course> coursesList = courseDAO.getAllCourses();
+        request.setAttribute("courses",coursesList);
+
+        List<Registration> registrationsListByStudentId = registrationDAO.getRegistrationsByStudent(studentId);
+        request.setAttribute("registrations",registrationsListByStudentId);
+        request.getRequestDispatcher(request.getParameter("destination")).forward(request, response);
+    }
+
+    private void addRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        int studentId = 1; //a changer
+
+        Course course = courseDAO.getCourseById(courseId);
+        Student student = studentDAO.getStudentById(studentId);
+        Date date = new Date();
+
+        Registration registration = new Registration();
+        registration.setCourse(course);
+        registration.setStudent(student);
+        registration.setRegistrationDate(date);
+
+        registrationDAO.saveRegistration(registration);
+        response.sendRedirect(request.getContextPath() + "/RegistrationController?action=listByStudent&destination=/views/student/RegistrationManagement.jsp");
+    }
+
+    }
