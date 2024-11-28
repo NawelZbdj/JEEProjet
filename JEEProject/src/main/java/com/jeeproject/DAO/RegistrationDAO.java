@@ -1,7 +1,6 @@
 package com.jeeproject.DAO;
 
-import com.jeeproject.HibernateUtil;
-import com.jeeproject.Model.Course;
+import com.jeeproject.Utils.HibernateUtil;
 import com.jeeproject.Model.Registration;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
