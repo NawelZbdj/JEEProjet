@@ -1,4 +1,4 @@
-package com.jeeproject;
+package com.jeeproject.Util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
