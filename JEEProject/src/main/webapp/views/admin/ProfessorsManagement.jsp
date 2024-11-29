@@ -4,11 +4,32 @@
 <html>
 <head>
     <title>Professor Management</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/views/css/AdminStyle.css">
+
 </head>
 <body>
+<div class="page">
+    <header class="banner">
+        <img src="<%= request.getContextPath() %>/views/image/logoGreen.png" alt="Logo" class="banner-image">
+        <button class="logout-button" onclick="logout()">Log out</button>
+    </header>
+    <script>
+        function logout() {
+            window.location.href = '<%= request.getContextPath() %>/views/logout.jsp';
+        }
+    </script>
+    <nav class="menu-bar">
+        <ul class="menu">
+            <li><a href="<%=request.getContextPath()%>/views/admin/AdminManagement.jsp">Administrators</a></li>
+            <li><a href="">Students</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/ProfessorsManagement.jsp">Professors</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/CoursesManagementMenu.jsp">Courses</a></li>
+        </ul>
+    </nav>
+    <main class="content">
 <h1>Professor Management</h1>
 
-<form method="get" action="ProfessorController">
+<form method="get" action="<%=request.getContextPath()%>/ProfessorController" class="formAff">
     <input type="hidden" name="action" value="search">
     <label for="keyword">Search:</label>
     <input type="text" name="keyword" id="keyword" placeholder="Name or email">
@@ -21,7 +42,7 @@
     <button type="submit">Search</button>
 </form>
 
-<a href="<%=request.getContextPath()%>/ProfessorController?action=add">Add New Professor</a>
+<a class="link-button" href="<%=request.getContextPath()%>/ProfessorController?action=add">Add New Professor</a>
 
 
 
@@ -54,8 +75,8 @@
         <td><%= professor.getEmail() %></td>
         <td><%= professor.getSpecialty() %></td>
         <td>
-            <a href="<%=request.getContextPath()%>/ProfessorController?action=update&id=<%= professor.getId() %>&destination=/views/admin/UpdateProfessor.jsp">Edit</a> |
-            <a href="ProfessorController?action=delete&id=<%= professor.getId() %>" onclick="return confirm('Are you sure?')">Delete</a>
+            <a class="link-button" href="<%=request.getContextPath()%>/ProfessorController?action=update&id=<%= professor.getId() %>&destination=/views/admin/UpdateProfessor.jsp">Edit</a> |
+            <a class="link-button" href="ProfessorController?action=delete&id=<%= professor.getId() %>" onclick="return confirm('Are you sure?')">Delete</a>
         </td>
     </tr>
     <%
@@ -71,6 +92,7 @@
     %>
     </tbody>
 </table>
-
+    </main>
+</div>
 </body>
 </html>

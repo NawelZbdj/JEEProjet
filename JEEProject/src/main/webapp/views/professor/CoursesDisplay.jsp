@@ -12,13 +12,13 @@
 <html>
 <head>
     <title>Professor - Courses display</title>
-  <link rel="stylesheet" href="views/css/ProfessorStyle.css">
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/views/css/ProfessorStyle.css">
 
 </head>
 <body>
 <div class="page">
   <header class="banner">
-    <img src="views/image/logoBG.png" alt="Logo" class="banner-image">
+    <img src="<%=request.getContextPath()%>/views/image/logoBG.png" alt="Logo" class="banner-image">
     <button class="logout-button" onclick="logout()">Log out</button>
   </header>
   <script>
