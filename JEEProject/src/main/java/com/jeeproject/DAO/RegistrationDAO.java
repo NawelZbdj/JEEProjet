@@ -1,5 +1,6 @@
 package com.jeeproject.DAO;
 
+import com.jeeproject.Model.Professor;
 import com.jeeproject.Utils.HibernateUtil;
 import com.jeeproject.Model.Registration;
 import org.hibernate.Session;
@@ -80,6 +81,20 @@ public class RegistrationDAO {
             return true;
         }catch (Exception e){
             return false;
+        }
+    }
+
+    public List<Registration> getRegistrationsByProfessor(int professorId){
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query<Registration> query = session.createQuery("SELECT r FROM Registration r " +
+                    "JOIN FETCH r.course c " +
+                    "LEFT JOIN FETCH r.professor p " +
+                    "LEFT JOIN FETCH r.student s " +
+                    "WHERE p.id = :professorId",Registration.class);
+            query.setParameter("professorId", professorId);
+            return query.getResultList();
+        }catch(Exception e){
+            return new ArrayList<>();
         }
     }
 

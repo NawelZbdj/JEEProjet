@@ -9,13 +9,34 @@
 <html>
 <head>
     <title>Admin - Edit Course</title>
+    <link rel="stylesheet" href="views/css/AdminStyle.css">
+
 </head>
 <body>
+<div class="page">
+    <header class="banner">
+        <img src="views/image/logoGreen.png" alt="Logo" class="banner-image">
+        <button class="logout-button" onclick="logout()">Log out</button>
+    </header>
+    <script>
+        function logout() {
+            window.location.href = '<%= request.getContextPath() %>/views/logout.jsp';
+        }
+    </script>
+    <nav class="menu-bar">
+        <ul class="menu">
+            <li><a href="<%=request.getContextPath()%>/views/admin/AdminManagement.jsp">Administrators</a></li>
+            <li><a href="">Students</a></li>
+            <li><a href="">Professors</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/CoursesManagementMenu.jsp">Courses</a></li>
+        </ul>
+    </nav>
+    <main class="content">
     <%
       Course course = (Course) request.getAttribute("course");
     %>
     <h2>Edit a Course</h2>
-    <form action="<%=request.getContextPath()%>/CourseController" method="post">
+    <form action="<%=request.getContextPath()%>/CourseController" method="post" class="formAff">
       <label>Title : </label>
       <input type="text" id="title" name="title" value="<%=course.getTitle()%>"><br><br>
 
@@ -34,6 +55,7 @@
       <button type="submit">Save Changes</button>
 
     </form>
-
+    </main>
+</div>
 </body>
 </html>

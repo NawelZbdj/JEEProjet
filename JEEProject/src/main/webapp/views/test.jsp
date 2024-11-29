@@ -14,7 +14,7 @@
 <body>
 <div class="page">
 <header class="banner">
-  <img src="image/logo.png" alt="Logo" class="banner-image">
+  <img src="image/logoBlue.png" alt="Logo" class="banner-image">
   <button class="logout-button">Log out</button>
 </header>
 <nav class="menu-bar">

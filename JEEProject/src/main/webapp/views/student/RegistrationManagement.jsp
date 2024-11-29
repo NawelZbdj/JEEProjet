@@ -14,8 +14,29 @@
 <html>
 <head>
     <title>Student - Registration Management</title>
+    <link rel="stylesheet" href="views/css/StudentStyle.css">
+    <link rel="stylesheet" href="views/css/registrationStyle.css">
+
+
 </head>
 <body>
+<div class="page">
+    <header class="banner">
+        <img src="views/image/logoBlue.png" alt="Logo" class="banner-image">
+        <button class="logout-button" onclick="logout()">Log out</button>
+    </header>
+    <script>
+        function logout() {
+            window.location.href = '<%= request.getContextPath() %>/views/logout.jsp';
+        }
+    </script>
+    <nav class="menu-bar">
+        <ul class="menu">
+            <li><a href="<%=request.getContextPath()%>/views/student/GradesDisplay.jsp">My results</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/student/RegistrationManagement.jsp">My courses</a></li>
+        </ul>
+    </nav>
+    <main class="content">
 <h2>My courses</h2>
 
 <%
@@ -41,11 +62,11 @@
 
 %>
     <table>
-        <tr>
-            <th>Course</th>
+        <tr class="reg">
+            <th class="left">Course</th>
             <th>Description</th>
             <th>Credit</th>
-            <th> </th>
+            <th class="right">Professor</th>
         </tr>
     </table>
     <%
@@ -59,19 +80,19 @@
         %>
     <table>
         <tr>
-            <td><%=currentCourse.getTitle()%></td>
+            <td class="left"><%=currentCourse.getTitle()%></td>
             <td><%=currentCourse.getDescription()%></td>
             <td><%=currentCourse.getCredit()%></td>
             <%
                 if(registration.getProfessor()==null){
             %>
             <td>pending</td>
-            <td><a href="<%=request.getContextPath()%>/RegistrationController?action=delete&id=<%=registration.getId()%>" onclick="return confirm('Are you sure you want to cancel this registration?');">cancel registration </a></td>
+            <td class="right"><a class="link-button" href="<%=request.getContextPath()%>/RegistrationController?action=delete&id=<%=registration.getId()%>" onclick="return confirm('Are you sure you want to cancel this registration?');">cancel registration </a></td>
             <%
                 }
                 else{
             %>
-            <td><%=registration.getProfessor().getFirstName()%> <%=registration.getProfessor().getLastName()%></td>
+            <td class="right"><%=registration.getProfessor().getFirstName()%> <%=registration.getProfessor().getLastName()%></td>
             <%
                 }
             %>
@@ -83,7 +104,8 @@
         }
         }
     %>
-    <a href="<%=request.getContextPath()%>/RegistrationController?action=listByStudentWithCourses&destination=views/student/NewRegistration.jsp">Register for a new course</a>
-
+    <a href="<%=request.getContextPath()%>/RegistrationController?action=listByStudentWithCourses&destination=views/student/NewRegistration.jsp" class="link-button">Register for a new course</a>
+    </main>
+</div>
 </body>
 </html>
