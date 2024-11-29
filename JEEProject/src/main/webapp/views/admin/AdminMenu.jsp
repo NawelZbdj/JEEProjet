@@ -12,8 +12,8 @@
 <ul>
     <li><a href="AdminManagement.jsp">Administrators</a></li>
     <li><a href="">Students</a></li>
-    <li><a href="">Professors</a></li>
-    <li><a href="">Courses</a></li>
+    <li><a href="ProfessorsManagement.jsp">Professors</a></li>
+    <li><a href="CoursesManagementMenu.jsp">Courses</a></li>
 </ul>
 
 <body>

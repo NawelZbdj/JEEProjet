@@ -12,6 +12,6 @@
         <property name="specialty" column="specialty" type="string"/>
         <property name="email" column="email" type="string"/>
 
-        <one-to-one name="account" class="com.jeeproject.Model.Account"/>
+        <many-to-one name="account" class="com.jeeproject.Model.Account" column="account_id" cascade="save-update"/>
     </class>
 </hibernate-mapping>
