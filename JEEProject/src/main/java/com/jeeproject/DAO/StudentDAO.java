@@ -2,7 +2,7 @@ package com.jeeproject.DAO;
 
 import com.jeeproject.Model.Professor;
 import com.jeeproject.Model.Student;
-import com.jeeproject.Util.HibernateUtil;
+import com.jeeproject.Utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 

@@ -8,8 +8,31 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<head>
+    <title>Admin - Courses Management Menu</title>
+    <link rel="stylesheet" href="../css/AdminStyle.css">
 
-
+</head>
+<body>
+<div class="page">
+    <header class="banner">
+        <img src="../image/logoGreen.png" alt="Logo" class="banner-image">
+        <button class="logout-button" onclick="logout()">Log out</button>
+    </header>
+    <script>
+        function logout() {
+            window.location.href = '<%= request.getContextPath() %>/views/logout.jsp';
+        }
+    </script>
+    <nav class="menu-bar">
+        <ul class="menu">
+            <li><a href="<%=request.getContextPath()%>/views/admin/AdminManagement.jsp">Administrators</a></li>
+            <li><a href="">Students</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/ProfessorsManagement.jsp">Professors</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/CoursesManagementMenu.jsp">Courses</a></li>
+        </ul>
+    </nav>
+    <main class="content">
 <body>
 <%
     Administrator account = (Administrator) session.getAttribute("admin");
@@ -23,7 +46,7 @@
 
 %>
 
-<h1>Menu</h1>
+<h2>Menu</h2>
 
     <table>
         <tr>
@@ -33,7 +56,7 @@
             <td><a href="#" class="redirect">Students</a></td>
         </tr>
         <tr>
-            <td><a href=""<%=request.getContextPath()%>/views/admin/ProfessorsManagement.jsp"" class="redirect">Professors</a></td>
+            <td><a href="<%=request.getContextPath()%>/views/admin/ProfessorsManagement.jsp" class="redirect">Professors</a></td>
         </tr>
         <tr>
             <td><a class="redirect" href="<%=request.getContextPath()%>/views/admin/CoursesManagementMenu.jsp">
@@ -42,5 +65,7 @@
             </td>
         </tr>
     </table>
+    </main>
+</div>
 </body>
 </html>
