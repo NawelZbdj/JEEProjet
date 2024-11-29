@@ -1,5 +1,7 @@
 package com.jeeproject.DAO;
 
+import com.jeeproject.Model.Administrator;
+import com.jeeproject.Utils.HibernateUtil;
 import com.jeeproject.Model.Professor;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -35,6 +37,16 @@ public class ProfessorDAO {
             return session.createQuery("from Professor", Professor.class).list();
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Professor getProfessorByAccountId(int accountId){
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query<Professor> query = session.createQuery("SELECT p FROM Professor p WHERE p.account.id = :accountId ",Professor.class);
+            query.setParameter("accountId", accountId);
+            return query.uniqueResult();
+        }catch(Exception e){
             return null;
         }
     }

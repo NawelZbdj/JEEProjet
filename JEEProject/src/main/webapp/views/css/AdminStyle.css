@@ -6,10 +6,10 @@ body{
     margin: 30px 100px 0px 100px;
     padding: 30px;
     font-family: Arial, sans-serif;
-    background-color: #0b5394;
+    background-color: #77936b;
     color: #333;
     line-height: 1.6;
-    border: 10px solid #204e78;
+    border: 10px solid #9ec28e;
     min-height: 100%;
 }
 
@@ -19,7 +19,7 @@ header.banner {
     align-items: center;
     padding: 15px 30px;
     margin: 20px auto;
-    background-color: #0b5394;
+    background-color: #77936b;
     border-radius: 10px;
     max-width: 1000px;
 }
@@ -32,7 +32,7 @@ header.banner {
 .logout-button {
     padding: 10px 20px;
     background-color: #efefef;
-    color: #0b5394;
+    color: #77936b;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -41,7 +41,7 @@ header.banner {
 }
 
 .logout-button:hover {
-    background-color: #9fb8ce;
+    background-color: #9ec28e;
 }
 
 
@@ -63,7 +63,7 @@ header.banner {
 
 .menu a {
     text-decoration: none;
-    color: #0b5394;
+    color: #77936b;
     font-weight: bold;
     font-size: 18px;
     padding: 10px 15px;
@@ -71,7 +71,7 @@ header.banner {
 }
 
 .menu a:hover {
-    background-color: #0b5394;
+    background-color: #77936b;
     color: #efefef;
 }
 
@@ -86,12 +86,18 @@ main.content {
 }
 
 *{
-    scrollbar-color: #0b5394 #efefef;
+    scrollbar-color: #77936b #efefef;
     scrollbar-width: thin;
 }
 
+h2{
+    font-size: 32px;
+    color: #77936b;
+    font-weight: bold;
+}
+
 button,input[type="submit"] {
-    background-color: #9fb8ce;
+    background-color: #9ec28e;
     border: none;
     border-radius: 15px;
     color: white;
@@ -105,11 +111,11 @@ button{
 }
 
 button:hover,input[type="submit"]:hover {
-    color: #0b5394;
+    color: #77936b;
 }
 
 input[type="text"],input[type="password"] {
-    border: 1px solid #9fb8ce;
+    border: 1px solid #9ec28e;
     border-radius: 8px;
     padding: 5px 10px;
     font-size: 14px;
@@ -120,14 +126,20 @@ input:hover {
     border-color: #efefef;
 }
 
+select{
+    border: 1px solid #9ec28e;
+    border-radius: 8px;
+    padding: 5px 10px;
+}
+
 h1{
     text-align: center;
     font-size: 35px;
     font-weight: bold;
-    color: #0b5394;
+    color: #77936b;
 }
 
-#log {
+.log {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -138,15 +150,105 @@ h1{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     max-width: 400px;
     margin: 50px auto;
-    border: 2px solid #0b5394;
+    border: 2px solid #77936b;
 }
 
-#log label {
+.log label {
     font-size: 16px;
     font-weight: bold;
-    color: #0b5394;
+    color: #77936b;
     padding-bottom: 10px;
 }
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table td {
+    padding: 12px;
+    font-size: 16px;
+    text-align: center;
+    min-width: 70px;
+    background-color: #f9f9f9;
+}
+
+.desc{
+    width : 550px;
+}
+
+table td:hover {
+    background-color: #e0e0e0;
+}
+
+table th {
+    background-color: #77936b;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-size: 18px;
+}
+
+table tr:nth-child(even) td {
+    background-color: #f1f1f1;
+}
+
+.redirect{
+    display: block;
+    width: 60%;
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #77936b;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+
+.link-button{
+    display: inline-block;
+    background-color: darkgrey;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 7px 10px;
+    border-radius: 18px;
+    text-align: center;
+}
+
+.link-button:hover{
+    background-color: #77936b;
+}
+
+.right{
+    text-align: right;
+}
+
+.formAff{
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    min-width: 400px;
+    margin: 50px auto;
+    border: 2px solid #77936b;
+}
+
+.formAff label{
+    font-size: 16px;
+    font-weight: bold;
+    color: #77936b;
+}
+
 
 @media (max-width: 768px) {
     header.banner {

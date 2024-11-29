@@ -16,9 +16,29 @@
 <html>
 <head>
     <title>Admin - Course Assignment</title>
+    <link rel="stylesheet" href="views/css/AdminStyle.css">
+
 </head>
 <body>
-<h2>Courses to assign</h2>
+<div class="page">
+    <header class="banner">
+        <img src="views/image/logoGreen.png" alt="Logo" class="banner-image">
+        <button class="logout-button" onclick="logout()">Log out</button>
+    </header>
+    <script>
+        function logout() {
+            window.location.href = '<%= request.getContextPath() %>/views/logout.jsp';
+        }
+    </script>
+    <nav class="menu-bar">
+        <ul class="menu">
+            <li><a href="<%=request.getContextPath()%>/views/admin/AdminManagement.jsp">Administrators</a></li>
+            <li><a href="">Students</a></li>
+            <li><a href="">Professors</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/CoursesManagementMenu.jsp">Courses</a></li>
+        </ul>
+    </nav>
+    <main class="content"><h2>Courses to assign</h2>
 <%
     List<Professor> professorsList = (List<Professor>) request.getAttribute("professors");
 
@@ -71,9 +91,9 @@
         }
         professorBySpeciality.get(professor.getSpecialty()).add(professor);
     }
-
-
-
+%>
+        <table>
+        <%
     //List all registrations by courses and by threshold
     for(Map.Entry<Course, List<List<Registration>>> RegistrationsByCourse : unassignedRegistrationsByCourse.entrySet()){
         List<List<Registration>> CourseRegistrations = RegistrationsByCourse.getValue();
@@ -84,8 +104,6 @@
 
         for(List<Registration> registrationList : CourseRegistrations){
 %>
-
-    <table>
         <tr>
             <td><%= currentSpeciality %></td>
             <td><%= currentCourse.getTitle()%></td>
@@ -116,12 +134,10 @@
             </form>
 
         </tr>
-    </table>
-
 <%      }
     }
-
 %>
+        </table>
 
 
 
@@ -166,7 +182,7 @@
         }
     %>
 </table>
-
-
+    </main>
+</div>
 </body>
 </html>
