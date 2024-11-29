@@ -15,13 +15,13 @@
 <html>
 <head>
     <title>Student - Display Grades</title>
-    <link rel="stylesheet" href="views/css/StudentStyle.css">
-    <link rel="stylesheet" href="views/css/GradesDisplay.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/views/css/StudentStyle.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/views/css/GradesDisplay.css">
 </head>
 <body>
 <div class="page">
     <header class="banner">
-        <img src="views/image/logoBlue.png" alt="Logo" class="banner-image">
+        <img src="<%=request.getContextPath()%>/views/image/logoBlue.png" alt="Logo" class="banner-image">
         <button class="logout-button" onclick="logout()">Log out</button>
     </header>
     <script>

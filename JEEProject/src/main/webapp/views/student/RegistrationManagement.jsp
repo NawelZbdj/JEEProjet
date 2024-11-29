@@ -14,15 +14,15 @@
 <html>
 <head>
     <title>Student - Registration Management</title>
-    <link rel="stylesheet" href="views/css/StudentStyle.css">
-    <link rel="stylesheet" href="views/css/registrationStyle.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/views/css/StudentStyle.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/views/css/registrationStyle.css">
 
 
 </head>
 <body>
 <div class="page">
     <header class="banner">
-        <img src="views/image/logoBlue.png" alt="Logo" class="banner-image">
+        <img src="<%=request.getContextPath()%>/views/image/logoBlue.png" alt="Logo" class="banner-image">
         <button class="logout-button" onclick="logout()">Log out</button>
     </header>
     <script>

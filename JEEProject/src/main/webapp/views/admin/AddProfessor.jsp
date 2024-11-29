@@ -3,9 +3,31 @@
 <html>
 <head>
     <title>Add Professor</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/views/css/AdminStyle.css">
+
 </head>
 <body>
-<form method="post" action="ProfessorController?action=add" >
+<div class="page">
+    <header class="banner">
+        <img src="<%= request.getContextPath() %>/views/image/logoGreen.png" alt="Logo" class="banner-image">
+        <button class="logout-button" onclick="logout()">Log out</button>
+    </header>
+    <script>
+        function logout() {
+            window.location.href = '<%= request.getContextPath() %>/views/logout.jsp';
+        }
+    </script>
+    <nav class="menu-bar">
+        <ul class="menu">
+            <li><a href="<%=request.getContextPath()%>/views/admin/AdminManagement.jsp">Administrators</a></li>
+            <li><a href="">Students</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/ProfessorsManagement.jsp">Professors</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/CoursesManagementMenu.jsp">Courses</a></li>
+        </ul>
+    </nav>
+    <main class="content">
+        <h2>Add a Professor</h2>
+<form method="post" action="ProfessorController?action=add" class="formAff">
     <label for="firstName">First Name:</label>
     <input type="text" id="firstName" name="firstName" required><br>
 
@@ -21,5 +43,7 @@
     <input type="date" id="birthDate" name="birthDate" required><br><br>
     <button type="submit">Add Professor</button>
 </form>
+    </main>
+</div>
 </body>
 </html>

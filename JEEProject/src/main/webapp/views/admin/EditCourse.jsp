@@ -9,13 +9,13 @@
 <html>
 <head>
     <title>Admin - Edit Course</title>
-    <link rel="stylesheet" href="views/css/AdminStyle.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/views/css/AdminStyle.css">
 
 </head>
 <body>
 <div class="page">
     <header class="banner">
-        <img src="views/image/logoGreen.png" alt="Logo" class="banner-image">
+        <img src="<%= request.getContextPath() %>/views/image/logoGreen.png" alt="Logo" class="banner-image">
         <button class="logout-button" onclick="logout()">Log out</button>
     </header>
     <script>
@@ -27,7 +27,7 @@
         <ul class="menu">
             <li><a href="<%=request.getContextPath()%>/views/admin/AdminManagement.jsp">Administrators</a></li>
             <li><a href="">Students</a></li>
-            <li><a href="">Professors</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/ProfessorsManagement.jsp">Professors</a></li>
             <li><a href="<%=request.getContextPath()%>/views/admin/CoursesManagementMenu.jsp">Courses</a></li>
         </ul>
     </nav>

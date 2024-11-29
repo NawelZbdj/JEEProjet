@@ -10,13 +10,13 @@
 <html>
 <head>
     <title>Admin - Courses Management Menu</title>
-    <link rel="stylesheet" href="../css/AdminStyle.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/views/css/AdminStyle.css">
 
 </head>
 <body>
 <div class="page">
     <header class="banner">
-        <img src="../image/logoGreen.png" alt="Logo" class="banner-image">
+        <img src="<%= request.getContextPath() %>/views/image/logoGreen.png" alt="Logo" class="banner-image">
         <button class="logout-button" onclick="logout()">Log out</button>
     </header>
     <script>
