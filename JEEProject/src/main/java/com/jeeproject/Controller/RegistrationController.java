@@ -51,6 +51,9 @@ public class RegistrationController extends HttpServlet {
                 case "listByStudentWithCourses":
                     listRegistrationsByStudentWithCourses(request,response);
                     break;
+                case "listByProfessor":
+                    listRegistrationsByProfessor(request,response);
+                    break;
                 case "delete":
                     deleteRegistration(request,response);
                     break;
@@ -184,6 +187,13 @@ public class RegistrationController extends HttpServlet {
 
         registrationDAO.saveRegistration(registration);
         response.sendRedirect(request.getContextPath() + "/RegistrationController?action=listByStudent&destination=/views/student/RegistrationManagement.jsp");
+    }
+
+    private void listRegistrationsByProfessor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Registration> registrations = registrationDAO.getRegistrationsByProfessor(3);
+        request.setAttribute("registration",registrations);
+        String destination = request.getParameter("destination");
+        request.getRequestDispatcher(destination).forward(request, response);
     }
 
     }

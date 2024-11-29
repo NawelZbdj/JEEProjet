@@ -15,19 +15,24 @@
 <html>
 <head>
     <title>Student - Display Grades</title>
-    <link rel="stylesheet" href="views/css/StudentStyle.css">
-    <link rel="stylesheet" href="views/css/GradesDisplay.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/views/css/StudentStyle.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/views/css/GradesDisplay.css">
 </head>
 <body>
 <div class="page">
     <header class="banner">
-        <img src="views/image/logo.png" alt="Logo" class="banner-image">
-        <button class="logout-button">Log out</button>
+        <img src="<%=request.getContextPath()%>/views/image/logoBlue.png" alt="Logo" class="banner-image">
+        <button class="logout-button" onclick="logout()">Log out</button>
     </header>
+    <script>
+        function logout() {
+            window.location.href = '<%= request.getContextPath() %>/views/logout.jsp';
+        }
+    </script>
     <nav class="menu-bar">
         <ul class="menu">
             <li><a href="<%=request.getContextPath()%>/views/student/GradesDisplay.jsp">My results</a></li>
-            <li><a href="#">My courses</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/student/RegistrationManagement.jsp">My courses</a></li>
         </ul>
     </nav>
     <main class="content">

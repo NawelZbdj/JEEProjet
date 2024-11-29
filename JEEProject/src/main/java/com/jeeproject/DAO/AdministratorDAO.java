@@ -1,9 +1,11 @@
 package com.jeeproject.DAO;
 
+import com.jeeproject.Model.Account;
 import com.jeeproject.Model.Administrator;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import com.jeeproject.Utils.HibernateUtil;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -81,4 +83,13 @@ public class AdministratorDAO {
         }
     }
 
+    public Administrator getAdminByAccountId(int accountId){
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query<Administrator> query = session.createQuery("SELECT a FROM Administrator a WHERE a.account.id = :accountId ",Administrator.class);
+            query.setParameter("accountId", accountId);
+            return query.uniqueResult();
+        }catch(Exception e){
+            return null;
+        }
+    }
 }

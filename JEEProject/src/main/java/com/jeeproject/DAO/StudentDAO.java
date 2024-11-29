@@ -3,10 +3,12 @@ package com.jeeproject.DAO;
 import com.jeeproject.Model.Student;
 import com.jeeproject.Model.Student;
 import com.jeeproject.Utils.HibernateUtil;
+import com.jeeproject.Utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
+import org.hibernate.query.Query;
 
 public class StudentDAO {
 
@@ -75,6 +77,16 @@ public class StudentDAO {
             return query.list();
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Student getStudentByAccountId(int accountId){
+        try(Session session = com.jeeproject.Utils.HibernateUtil.getSessionFactory().openSession()){
+            Query<Student> query = session.createQuery("SELECT s FROM Student s WHERE s.account.id = :accountId ",Student.class);
+            query.setParameter("accountId", accountId);
+            return query.uniqueResult();
+        }catch(Exception e){
             return null;
         }
     }

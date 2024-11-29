@@ -16,9 +16,29 @@
 <html>
 <head>
     <title>Admin - Subject Management</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/views/css/AdminStyle.css">
+
 </head>
 <body>
-<%
+<div class="page">
+    <header class="banner">
+        <img src="<%= request.getContextPath() %>/views/image/logoGreen.png" alt="Logo" class="banner-image">
+        <button class="logout-button" onclick="logout()">Log out</button>
+    </header>
+    <script>
+        function logout() {
+            window.location.href = '<%= request.getContextPath() %>/views/logout.jsp';
+        }
+    </script>
+    <nav class="menu-bar">
+        <ul class="menu">
+            <li><a href="<%=request.getContextPath()%>/views/admin/AdminManagement.jsp">Administrators</a></li>
+            <li><a href="">Students</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/ProfessorsManagement.jsp">Professors</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/CoursesManagementMenu.jsp">Courses</a></li>
+        </ul>
+    </nav>
+    <main class="content"><%
     if(request.getAttribute("courses") == null) {
         response.sendRedirect(request.getContextPath() + "/CourseController?action=list&destination=/views/admin/SubjectManagement.jsp");
     }
@@ -39,26 +59,30 @@
                     List<Course> specialityCourses = CoursesBySpeciality.getValue();
 %>
     <h2><%=CoursesBySpeciality.getKey()%></h2>
+        <table>
         <%        for(Course course : specialityCourses){
         %>
-    <table>
+
         <tr>
             <td><%= course.getTitle()%></td>
-            <td><%= course.getDescription()%></td>
+            <td class="desc"><%= course.getDescription()%></td>
             <td><%= course.getCredit()%></td>
-            <td><a href="<%=request.getContextPath()%>/CourseController?action=edit&id=<%= course.getId() %>">edit</a></td>
-            <td><a href="<%=request.getContextPath()%>/CourseController?action=delete&id=<%= course.getId() %>" onclick="return confirm('Are you sure you want to delete this course?');">
+            <td class="right"><a class="link-button" href="<%=request.getContextPath()%>/CourseController?action=edit&id=<%= course.getId() %>">edit</a></td>
+            <td class="right"><a class="link-button" href="<%=request.getContextPath()%>/CourseController?action=delete&id=<%= course.getId() %>" onclick="return confirm('Are you sure you want to delete this course?');">
                 delete</a></td>
         </tr>
+            <%
+                }
+            %>
     </table>
 
 <%
-                }
             }
         }
 %>
     <br><br>
-    <a href="<%=request.getContextPath()%>/views/admin/AddCourse.jsp">add course</a>
-
+    <a  class="link-button" href="<%=request.getContextPath()%>/views/admin/AddCourse.jsp">add course</a>
+    </main>
+</div>
 </body>
 </html>

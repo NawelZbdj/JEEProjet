@@ -6,10 +6,10 @@ body{
     margin: 30px 100px 0px 100px;
     padding: 30px;
     font-family: Arial, sans-serif;
-    background-color: #0b5394;
+    background-color: #45818e;
     color: #333;
     line-height: 1.6;
-    border: 10px solid #204e78;
+    border: 10px solid #b4cccd;
     min-height: 100%;
 }
 
@@ -19,7 +19,7 @@ header.banner {
     align-items: center;
     padding: 15px 30px;
     margin: 20px auto;
-    background-color: #0b5394;
+    background-color: #45818e;
     border-radius: 10px;
     max-width: 1000px;
 }
@@ -32,7 +32,7 @@ header.banner {
 .logout-button {
     padding: 10px 20px;
     background-color: #efefef;
-    color: #0b5394;
+    color: #45818e;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -41,7 +41,7 @@ header.banner {
 }
 
 .logout-button:hover {
-    background-color: #9fb8ce;
+    background-color: #b4cccd;
 }
 
 
@@ -63,7 +63,7 @@ header.banner {
 
 .menu a {
     text-decoration: none;
-    color: #0b5394;
+    color: #45818e;
     font-weight: bold;
     font-size: 18px;
     padding: 10px 15px;
@@ -71,7 +71,7 @@ header.banner {
 }
 
 .menu a:hover {
-    background-color: #0b5394;
+    background-color: #45818e;
     color: #efefef;
 }
 
@@ -86,12 +86,12 @@ main.content {
 }
 
 *{
-    scrollbar-color: #0b5394 #efefef;
+    scrollbar-color: #45818e #efefef;
     scrollbar-width: thin;
 }
 
 button,input[type="submit"] {
-    background-color: #9fb8ce;
+    background-color: #b4cccd;
     border: none;
     border-radius: 15px;
     color: white;
@@ -105,11 +105,11 @@ button{
 }
 
 button:hover,input[type="submit"]:hover {
-    color: #0b5394;
+    color: #45818e;
 }
 
 input[type="text"],input[type="password"] {
-    border: 1px solid #9fb8ce;
+    border: 1px solid #b4cccd;
     border-radius: 8px;
     padding: 5px 10px;
     font-size: 14px;
@@ -124,7 +124,7 @@ h1{
     text-align: center;
     font-size: 35px;
     font-weight: bold;
-    color: #0b5394;
+    color: #45818e;
 }
 
 #log {
@@ -138,15 +138,46 @@ h1{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     max-width: 400px;
     margin: 50px auto;
-    border: 2px solid #0b5394;
+    border: 2px solid #45818e;
 }
 
 #log label {
     font-size: 16px;
     font-weight: bold;
-    color: #0b5394;
+    color: #45818e;
     padding-bottom: 10px;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    font-size: 18px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+table td:hover {
+    background-color: #e0e0e0;
+}
+
+table th {
+    background-color: #45818e;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-size: 18px;
+}
+
+table tr:nth-child(even) td {
+    background-color: #f1f1f1;
+}
+
 
 @media (max-width: 768px) {
     header.banner {
