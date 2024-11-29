@@ -4,18 +4,39 @@
 <html>
 <head>
     <title>Student Management</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/views/css/AdminStyle.css">
+
 </head>
 <body>
-<h1>Student Management</h1>
+<div class="page">
+    <header class="banner">
+        <img src="<%= request.getContextPath() %>/views/image/logoGreen.png" alt="Logo" class="banner-image">
+        <button class="logout-button" onclick="logout()">Log out</button>
+    </header>
+    <script>
+        function logout() {
+            window.location.href = '<%= request.getContextPath() %>/views/logout.jsp';
+        }
+    </script>
+    <nav class="menu-bar">
+        <ul class="menu">
+            <li><a href="<%=request.getContextPath()%>/views/admin/AdminManagement.jsp">Administrators</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/StudentsManagement.jsp">Students</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/ProfessorsManagement.jsp">Professors</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/CoursesManagementMenu.jsp">Courses</a></li>
+        </ul>
+    </nav>
+    <main class="content">
+        <h1>Student Management</h1>
 
-<form method="get" action="StudentController">
+<form method="get" action="<%=request.getContextPath()%>/StudentController" class="formAff">
     <input type="hidden" name="action" value="search">
     <label for="keyword">Search:</label>
     <input type="text" name="keyword" id="keyword" placeholder="Name or email">
     <button type="submit">Search</button>
 </form>
 
-<a href="<%=request.getContextPath()%>/StudentController?action=add">Add New Student</a>
+<a class="link-button" href="<%=request.getContextPath()%>/StudentController?action=add">Add New Student</a>
 
 
 
@@ -46,8 +67,8 @@
         <td><%= student.getLastName() %></td>
         <td><%= student.getEmail() %></td>
         <td>
-            <a href="<%=request.getContextPath()%>/StudentController?action=update&id=<%= student.getId() %>&destination=/views/admin/UpdateStudent.jsp">Edit</a> |
-            <a href="StudentController?action=delete&id=<%= student.getId() %>" onclick="return confirm('Are you sure?')">Delete</a>
+            <a class="link-button" href="<%=request.getContextPath()%>/StudentController?action=update&id=<%= student.getId() %>&destination=/views/admin/UpdateStudent.jsp">Edit</a> |
+            <a class="link-button" href="<%=request.getContextPath()%>/StudentController?action=delete&id=<%= student.getId() %>" onclick="return confirm('Are you sure?')">Delete</a>
         </td>
     </tr>
     <%
@@ -63,6 +84,7 @@
     %>
     </tbody>
 </table>
-
+    </main>
+</div>
 </body>
 </html>

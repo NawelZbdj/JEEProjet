@@ -27,7 +27,7 @@
     <nav class="menu-bar">
         <ul class="menu">
             <li><a href="<%=request.getContextPath()%>/views/admin/AdminManagement.jsp">Administrators</a></li>
-            <li><a href="">Students</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/admin/StudentsManagement.jsp">Students</a></li>
             <li><a href="<%=request.getContextPath()%>/views/admin/ProfessorsManagement.jsp">Professors</a></li>
             <li><a href="<%=request.getContextPath()%>/views/admin/CoursesManagementMenu.jsp">Courses</a></li>
         </ul>
@@ -53,7 +53,7 @@
             <td><a class="redirect" href="<%=request.getContextPath()%>/views/admin/AdminManagement.jsp">Administrators</a></td>
         </tr>
         <tr>
-            <td><a href="#" class="redirect">Students</a></td>
+            <td><a href="<%=request.getContextPath()%>/views/admin/StudentsManagement.jsp" class="redirect">Students </a></td>
         </tr>
         <tr>
             <td><a href="<%=request.getContextPath()%>/views/admin/ProfessorsManagement.jsp" class="redirect">Professors</a></td>
