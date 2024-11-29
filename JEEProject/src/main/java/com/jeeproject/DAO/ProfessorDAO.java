@@ -6,6 +6,7 @@ import com.jeeproject.Model.Professor;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import com.jeeproject.Utils.HibernateUtil;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
