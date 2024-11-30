@@ -3,7 +3,8 @@
 <%@ page import="com.jeeproject.Model.Registration" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.jeeproject.Model.Student" %><%--
   Created by IntelliJ IDEA.
   User: CYTech Student
   Date: 11/25/2024
@@ -20,6 +21,27 @@
 
 </head>
 <body>
+
+<%
+    Student account = null;
+    try {
+        account = (Student)session.getAttribute("user");
+    }
+    catch(Exception e){
+        account = null;
+    }
+    if (account==null || !"student".equals(session.getAttribute("role"))){
+        session.invalidate();
+%>
+<script>
+    alert("An issue occurred with the connection.");
+    window.location.href = "<%= request.getContextPath() %>/views/menu.jsp";
+</script>
+<%
+        return;
+    }
+%>
+
 <div class="page">
     <header class="banner">
         <img src="<%=request.getContextPath()%>/views/image/logoBlue.png" alt="Logo" class="banner-image">
@@ -48,7 +70,12 @@
     if(request.getAttribute("registrations")!=null){
     List<Registration> registrationList = (List<Registration>) request.getAttribute("registrations");
 
-    //get the student id (scope session?)
+    if(registrationList.isEmpty()){
+ %>
+       <p>No registrations.</p>
+ <%
+    }
+    else{
 
     //Organize by specialities
     Map<String,List<Registration>> coursesBySpecialities = new HashMap<>();
@@ -101,6 +128,7 @@
     </table>
     <%
             }
+        }
         }
         }
     %>

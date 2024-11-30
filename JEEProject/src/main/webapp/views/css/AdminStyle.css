@@ -114,7 +114,7 @@ button:hover,input[type="submit"]:hover {
     color: #77936b;
 }
 
-input[type="text"],input[type="password"],input[type="email"] {
+input[type="text"],input[type="password"],input[type="email"],input[type="date"] {
     border: 1px solid #9ec28e;
     border-radius: 8px;
     padding: 5px 10px;
@@ -260,7 +260,6 @@ table tr:nth-child(even) td {
     .banner-image {
         margin-bottom: 10px;
     }
-
 
     .menu li {
         margin: 10px 0;

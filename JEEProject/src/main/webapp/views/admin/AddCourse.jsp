@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.jeeproject.Model.Administrator" %><%--
   Created by IntelliJ IDEA.
   User: CYTech Student
   Date: 11/23/2024
@@ -13,6 +13,28 @@
 
 </head>
 <body>
+
+<%
+    Administrator account = null;
+    try {
+        account = (Administrator) session.getAttribute("user");
+    }
+    catch(Exception e){
+        account = null;
+    }
+    if (account==null || !"admin".equals(session.getAttribute("role"))){
+        session.invalidate();
+%>
+<script>
+    alert("An issue occurred with the connection.");
+    window.location.href = "<%= request.getContextPath() %>/views/menu.jsp";
+</script>
+<%
+        return;
+    }
+%>
+
+
 <div class="page">
     <header class="banner">
         <img src="<%= request.getContextPath() %>/views/image/logoGreen.png" alt="Logo" class="banner-image">
@@ -35,16 +57,16 @@
         <h2>Add a new course</h2>
     <form action="<%=request.getContextPath()%>/CourseController" method="post" class="formAff">
       <label>Title : </label>
-      <input type="text" id="title" name="title"><br><br>
+      <input type="text" id="title" name="title" required><br><br>
 
       <label>Description : </label>
-      <input type="text" id="description" name="description"><br><br>
+      <input type="text" id="description" name="description" required><br><br>
 
       <label>Credit : </label>
-      <input type="text" id="credit" name="credit"><br><br>
+      <input type="text" id="credit" name="credit" required><br><br>
 
       <label>Speciality : </label>
-      <input type="text" id="speciality" name="speciality"><br><br>
+      <input type="text" id="speciality" name="speciality" required><br><br>
 
       <input type="hidden" name="action" value="save">
       <button type="submit">Save</button>

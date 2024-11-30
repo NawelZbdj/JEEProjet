@@ -9,15 +9,25 @@
 <html>
 <head>
     <title>Admin log</title>
-    <link rel="stylesheet" href="../css/AdminStyle.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/views/css/AdminStyle.css">
 </head>
 <body>
 <div class="page">
     <header class="banner">
-        <img src="../image/logoGreen.png" alt="Logo" class="banner-image" onclick="">
-    </header>
+        <a href="<%= request.getContextPath() %>/views/menu.jsp">
+            <img src="<%= request.getContextPath() %>/views/image/logoGreen.png" alt="Logo" class="banner-image">
+        </a>       </header>
     <main class="content">
         <h1>Log in</h1>
+
+        <%
+            if (request.getAttribute("errorMessage") != null) {
+        %>
+        <p style="color: red; text-align: center;"><%= request.getAttribute("errorMessage") %></p>
+        <%
+            }
+        %>
+
         <form action="<%=request.getContextPath()%>/AccountController" method="post" class="log">
             <label>Username :</label>
             <input type="text" name="username" id="username" required><br>

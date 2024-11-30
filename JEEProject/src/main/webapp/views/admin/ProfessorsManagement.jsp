@@ -1,5 +1,6 @@
 <%@ page import="com.jeeproject.Model.Professor" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.jeeproject.Model.Administrator" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
@@ -8,6 +9,26 @@
 
 </head>
 <body>
+
+<%
+    Administrator account = null;
+    try {
+        account = (Administrator) session.getAttribute("user");
+    }
+    catch(Exception e){
+        account = null;
+    }
+    if (account==null || !"admin".equals(session.getAttribute("role"))){
+        session.invalidate();
+%>
+<script>
+    alert("An issue occurred with the connection.");
+    window.location.href = "<%= request.getContextPath() %>/views/menu.jsp";
+</script>
+<%
+        return;
+    }
+%>
 <div class="page">
     <header class="banner">
         <img src="<%= request.getContextPath() %>/views/image/logoGreen.png" alt="Logo" class="banner-image">

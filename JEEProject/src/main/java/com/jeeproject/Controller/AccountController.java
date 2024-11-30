@@ -69,28 +69,50 @@ public class AccountController extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        if (account != null) {
-            if (role.equals("admin")) {
-                Administrator admin = administratorDAO.getAdminByAccountId(account.getId());
-                session.setAttribute("admin",admin);
-                session.setAttribute("role",role);
-                response.sendRedirect("views/admin/AdminMenu.jsp");
-
-            } else if (role.equals("professor")) {
-                Professor professor =professorDAO.getProfessorByAccountId(account.getId());
-                session.setAttribute("professor",professor);
-                session.setAttribute("role",role);
-                response.sendRedirect("views/professor/ProfessorMenu.jsp");
-
-            } else if (role.equals("admin")) {
-                Student student = studentDAO.getStudentByAccountId(account.getId());
-                session.setAttribute("student",student);
-                session.setAttribute("role",role);
-                response.sendRedirect("views/student/StudentMenu.jsp");
-            }
+        if(role==null){
+            request.getRequestDispatcher(request.getContextPath()+"/views/menu.jsp");
         }
-        else{
-            response.sendRedirect("views/menu.jsp");
+        else {
+
+            if (account != null) {
+                if (role.equals("admin")) {
+                    Administrator admin = administratorDAO.getAdminByAccountId(account.getId());
+                    session.setAttribute("user", admin);
+                    session.setAttribute("role", role);
+                    response.sendRedirect( "views/admin/AdminMenu.jsp");
+
+                } else if (role.equals("professor")) {
+                    Professor professor = professorDAO.getProfessorByAccountId(account.getId());
+                    session.setAttribute("user", professor);
+                    session.setAttribute("role", role);
+                    response.sendRedirect("views/professor/ProfessorMenu.jsp");
+
+                } else if (role.equals("student")) {
+                    Student student = studentDAO.getStudentByAccountId(account.getId());
+                    session.setAttribute("user", student);
+                    session.setAttribute("role", role);
+                    response.sendRedirect("views/student/StudentMenu.jsp");
+                }
+            } else {
+                request.setAttribute("errorMessage", "Unknown username or password.");
+                //request.getRequestDispatcher(request.getHeader("Referer")).forward(request, response);
+
+
+                //redirection previous page
+                if(role.equals("student")) {
+                    request.getRequestDispatcher(request.getContextPath()+"/views/student/logStudent.jsp").forward(request, response);
+                } else if(role.equals("professor")) {
+                    request.getRequestDispatcher(request.getContextPath()+"/views/professor/logProfessor.jsp").forward(request, response);
+
+                } else if(role.equals("admin")) {
+                    request.getRequestDispatcher("/views/admin/logAdmin.jsp").forward(request, response);
+                }
+                else{
+                    request.getRequestDispatcher(request.getContextPath()+"/views/menu.jsp");
+                }
+
+            }
+
         }
     }
 }

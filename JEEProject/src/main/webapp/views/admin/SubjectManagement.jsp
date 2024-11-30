@@ -3,6 +3,7 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.jeeproject.Model.Administrator" %>
 
 <%--
   Created by IntelliJ IDEA.
@@ -20,6 +21,27 @@
 
 </head>
 <body>
+
+<%
+    Administrator account = null;
+    try {
+        account = (Administrator) session.getAttribute("user");
+    }
+    catch(Exception e){
+        account = null;
+    }
+    if (account==null || !"admin".equals(session.getAttribute("role"))){
+        session.invalidate();
+%>
+<script>
+    alert("An issue occurred with the connection.");
+    window.location.href = "<%= request.getContextPath() %>/views/menu.jsp";
+</script>
+<%
+        return;
+    }
+%>
+
 <div class="page">
     <header class="banner">
         <img src="<%= request.getContextPath() %>/views/image/logoGreen.png" alt="Logo" class="banner-image">

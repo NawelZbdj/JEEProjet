@@ -9,15 +9,26 @@
 <html>
 <head>
     <title>Professor log</title>
-    <link rel="stylesheet" href="../css/ProfessorStyle.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/views/css/ProfessorStyle.css">
 </head>
 <body>
 <div class="page">
     <header class="banner">
-        <img src="../image/logoBG.png" alt="Logo" class="banner-image">
+        <a href="<%= request.getContextPath() %>/views/menu.jsp">
+            <img src="<%= request.getContextPath() %>/views/image/logoBG.png" alt="Logo" class="banner-image">
+        </a>
     </header>
     <main class="content">
         <h1>Log in</h1>
+
+        <%
+            if (request.getAttribute("errorMessage") != null) {
+        %>
+        <p style="color: red; text-align: center;"><%= request.getAttribute("errorMessage") %></p>
+        <%
+            }
+        %>
+
         <form action="<%=request.getContextPath()%>/AccountController" method="post" id="log">
             <label>Username :</label>
             <input type="text" name="username" id="username" required><br>

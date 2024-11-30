@@ -8,6 +8,7 @@ import com.jeeproject.DAO.AccountDAO;
 
 import com.jeeproject.Utils.AccountUtils.*;
 
+import com.jeeproject.Utils.EmailUtil;
 import com.jeeproject.Utils.HibernateUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -128,6 +129,19 @@ public class AdminController extends HttpServlet {
         // Log the Administrator details
         System.out.println("Admin details saved: " + admin.toString());
 
+        String subject = "sColartiY : Account created !";
+        String body = "Welcome " + admin.getFirstName() + ",\n\n" +
+                "You are now part of our staff as a \n" + admin.getPosition() +
+                "Here are your connection details: :\n\n" +
+                "Username :" + adminAccount.getUsername()+
+                "\nPassword :" + adminAccount.getPassword()+
+                "\n\nBest Regards,\nAdmin staff.";
+
+        try {
+            EmailUtil.sendEmail(admin.getEmail(), subject, body);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // Redirect to admin management page
         response.sendRedirect("AdminController?action=list");
     }

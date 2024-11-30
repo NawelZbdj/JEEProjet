@@ -8,6 +8,7 @@ import com.jeeproject.Model.Course;
 import com.jeeproject.Model.Student;
 import com.jeeproject.Utils.AccountUtils.PasswordGenerator;
 import com.jeeproject.Utils.AccountUtils.UsernameGenerator;
+import com.jeeproject.Utils.EmailUtil;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -131,6 +132,19 @@ public class StudentController extends HttpServlet {
         // Save Student
         studentDAO.saveStudent(student);
 
+        String subject = "sColartiY : Account created !";
+        String body = "Welcome " + student.getFirstName() + ",\n\n" +
+                "You are now part of our school. \n" +
+                "Here are your connection details: \n\n" +
+                "Username :" + studentAccount.getUsername()+
+                "\nPassword :" + studentAccount.getPassword()+
+                "\n\nBest Regards,\nAdmin staff.";
+
+        try {
+            EmailUtil.sendEmail(student.getEmail(), subject, body);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // Redirect to student management page
         response.sendRedirect("StudentController?action=list");
     }

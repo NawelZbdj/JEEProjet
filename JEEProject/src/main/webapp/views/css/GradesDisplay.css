@@ -28,7 +28,12 @@ h3{
     font-size: 17px;
     padding: 2px 5px 2px 5px;
     margin: 0;
+    border-bottom: 1px solid dimgrey;
+    border-top: 1px solid dimgrey;
+
 }
+
+
 
 .tablehead td{
     font-size: 12px;

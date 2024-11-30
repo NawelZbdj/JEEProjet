@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.List;
@@ -73,7 +74,10 @@ public class ResultController extends HttpServlet {
     }
 
     private void getResultsByStudentId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Result> resultsList = resultDAO.getResultsByStudentId(1); //remplacer id
+        HttpSession session = request.getSession();
+
+        Student student = (Student)session.getAttribute("user");
+        List<Result> resultsList = resultDAO.getResultsByStudentId(student.getId());
         request.setAttribute("results",resultsList);
 
         String destination = request.getParameter("destination");

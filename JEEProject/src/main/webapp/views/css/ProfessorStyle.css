@@ -108,7 +108,7 @@ button:hover,input[type="submit"]:hover {
     color: #45818e;
 }
 
-input[type="text"],input[type="password"] {
+input[type="text"],input[type="password"],input[type="date"] {
     border: 1px solid #b4cccd;
     border-radius: 8px;
     padding: 5px 10px;
@@ -178,6 +178,60 @@ table tr:nth-child(even) td {
     background-color: #f1f1f1;
 }
 
+
+.redirect{
+    display: block;
+    width: 60%;
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #45818e;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+
+.link-button{
+    display: inline-block;
+    background-color: darkgrey;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 7px 10px;
+    border-radius: 18px;
+    text-align: center;
+}
+
+.link-button:hover{
+    background-color: #b4cccd;
+}
+
+.right{
+    text-align: right;
+}
+
+.formAff{
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    min-width: 400px;
+    margin: 50px auto;
+    border: 2px solid #45818e;
+}
+
+.formAff label{
+    font-size: 16px;
+    font-weight: bold;
+    color: #45818e;
+}
 
 @media (max-width: 768px) {
     header.banner {

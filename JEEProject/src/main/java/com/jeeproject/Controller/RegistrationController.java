@@ -8,11 +8,13 @@ import com.jeeproject.Model.Course;
 import com.jeeproject.Model.Professor;
 import com.jeeproject.Model.Registration;
 import com.jeeproject.Model.Student;
+import com.jeeproject.Utils.EmailUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.Date;
@@ -108,6 +110,20 @@ public class RegistrationController extends HttpServlet {
                 if(registration != null){
                     registration.setProfessor(professor);
                     registrationDAO.updateRegistration(registration);
+
+                    Course course = registration.getCourse();
+                    Student student = registration.getStudent();
+                    String subject = "sColartiY :"+ course.getTitle() + "registration update.";
+                    String body = "Hello " + student.getFirstName() + ",\n\n" +
+                            "The registration is accepted. Your teacher will be "+ professor.getFirstName()+
+                            " "+professor.getLastName()+
+                            ".\n\nBest Regards,\nAdmin staff.";
+
+                    try {
+                        EmailUtil.sendEmail(student.getEmail(), subject, body);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -146,7 +162,10 @@ public class RegistrationController extends HttpServlet {
     }
 
     private void listRegistrationsByStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Registration> registrationList = registrationDAO.getRegistrationsByStudent(1);
+        HttpSession session = request.getSession();
+        Student student = (Student)session.getAttribute("user");
+
+        List<Registration> registrationList = registrationDAO.getRegistrationsByStudent(student.getId());
         request.setAttribute("registrations",registrationList);
 
         String destination = request.getParameter("destination");
@@ -162,22 +181,25 @@ public class RegistrationController extends HttpServlet {
     }
 
     private void listRegistrationsByStudentWithCourses(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int studentId = 1;        //a remplacer par l'id selon session!!!!
+        HttpSession session = request.getSession();
+        Student student = (Student)session.getAttribute("user");
 
         List<Course> coursesList = courseDAO.getAllCourses();
         request.setAttribute("courses",coursesList);
 
-        List<Registration> registrationsListByStudentId = registrationDAO.getRegistrationsByStudent(studentId);
+        List<Registration> registrationsListByStudentId = registrationDAO.getRegistrationsByStudent(student.getId());
         request.setAttribute("registrations",registrationsListByStudentId);
         request.getRequestDispatcher(request.getParameter("destination")).forward(request, response);
     }
 
     private void addRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        int studentId = 1; //a changer
+
+        HttpSession session = request.getSession();
+        Student user = (Student)session.getAttribute("user");
 
         Course course = courseDAO.getCourseById(courseId);
-        Student student = studentDAO.getStudentById(studentId);
+        Student student = studentDAO.getStudentById(user.getId());
         Date date = new Date();
 
         Registration registration = new Registration();
@@ -190,7 +212,10 @@ public class RegistrationController extends HttpServlet {
     }
 
     private void listRegistrationsByProfessor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Registration> registrations = registrationDAO.getRegistrationsByProfessor(3);
+        HttpSession session = request.getSession();
+        Professor professor = (Professor)session.getAttribute("user");
+
+        List<Registration> registrations = registrationDAO.getRegistrationsByProfessor(professor.getId());
         request.setAttribute("registration",registrations);
         String destination = request.getParameter("destination");
         request.getRequestDispatcher(destination).forward(request, response);

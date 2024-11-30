@@ -4,7 +4,8 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.jeeproject.Model.Professor" %><%--
+<%@ page import="com.jeeproject.Model.Professor" %>
+<%@ page import="com.jeeproject.Model.Student" %><%--
   Created by IntelliJ IDEA.
   User: CYTech Student
   Date: 11/28/2024
@@ -19,6 +20,27 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/views/css/GradesDisplay.css">
 </head>
 <body>
+
+<%
+    Student account = null;
+    try {
+        account = (Student)session.getAttribute("user");
+    }
+    catch(Exception e){
+        account = null;
+    }
+    if (account==null || !"student".equals(session.getAttribute("role"))){
+        session.invalidate();
+%>
+<script>
+    alert("An issue occurred with the connection.");
+    window.location.href = "<%= request.getContextPath() %>/views/menu.jsp";
+</script>
+<%
+        return;
+    }
+%>
+
 <div class="page">
     <header class="banner">
         <img src="<%=request.getContextPath()%>/views/image/logoBlue.png" alt="Logo" class="banner-image">
@@ -43,6 +65,14 @@
     }
     else{
     List<Result> results = (List<Result>) request.getAttribute("results");
+
+    if(results.isEmpty()){
+ %>
+   <p>No results yet.</p>
+ <%
+
+    }else{
+
 
     Map<String,Map<Course,List<Result>>> formattedResults = new HashMap();
 
@@ -141,6 +171,7 @@
 %>
         <p id="avg">  Average : <b> <%=String.format("%.2f",totalAvg)%></b></p>
 <%
+    }
     }
 %>
 

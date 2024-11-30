@@ -34,16 +34,25 @@
     </nav>
     <main class="content">
 <body>
-<%
-    Administrator account = (Administrator) session.getAttribute("admin");
-    System.out.println(session.getAttribute("admin"));
-    if (account!=null) {
 
-%>
-<p>Welcome, <%=account.getFirstName()%></p>
-<%
+    <%
+    Administrator account = null;
+    try {
+        account = (Administrator) session.getAttribute("user");
     }
-
+    catch(Exception e){
+        account = null;
+    }
+    if (account==null || !"admin".equals(session.getAttribute("role"))){
+        session.invalidate();
+%>
+<script>
+    alert("An issue occurred with the connection.");
+    window.location.href = "<%= request.getContextPath() %>/views/menu.jsp";
+</script>
+    <%
+        return;
+    }
 %>
 
 <h2>Menu</h2>

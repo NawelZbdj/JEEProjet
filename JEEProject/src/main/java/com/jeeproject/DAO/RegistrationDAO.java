@@ -37,10 +37,18 @@ public class RegistrationDAO {
         }
     }
 
-    public Registration getRegistrationById(int id){
-        try(Session session = HibernateUtil.getSessionFactory().openSession()){
-            return session.get(Registration.class,id);
-        }catch (Exception e){
+    public Registration getRegistrationById(int id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Registration> query = session.createQuery("SELECT r FROM Registration r " +
+                    "JOIN FETCH r.course c " +
+                    "LEFT JOIN FETCH r.professor p " +
+                    "LEFT JOIN FETCH r.student s " +
+                    "WHERE r.id = :id", Registration.class);
+            query.setParameter("id", id);
+
+            return query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

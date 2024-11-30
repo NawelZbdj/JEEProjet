@@ -6,6 +6,7 @@ import com.jeeproject.Model.Account;
 import com.jeeproject.Model.Professor;
 import com.jeeproject.Utils.AccountUtils.PasswordGenerator;
 import com.jeeproject.Utils.AccountUtils.UsernameGenerator;
+import com.jeeproject.Utils.EmailUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -125,6 +126,19 @@ public class ProfessorController extends HttpServlet {
         // Save Professor
         professorDAO.saveProfessor(professor);
 
+        String subject = "sColartiY : Account created !";
+        String body = "Welcome " + professor.getFirstName() + ",\n\n" +
+                "You are now part of our teaching team in \n" + professor.getSpecialty() +
+                "Here are your connection details: :\n\n" +
+                "Username :" + professorAccount.getUsername()+
+                "\nPassword :" + professorAccount.getPassword()+
+                "\n\nBest Regards,\nAdmin staff.";
+
+        try {
+            EmailUtil.sendEmail(professor.getEmail(), subject, body);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // Redirect to professor management page
         response.sendRedirect("ProfessorController?action=list");
     }
