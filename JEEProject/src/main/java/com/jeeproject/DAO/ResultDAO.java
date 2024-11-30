@@ -3,6 +3,7 @@ package com.jeeproject.DAO;
 import com.jeeproject.Model.Result;
 import com.jeeproject.Utils.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
@@ -39,4 +40,45 @@ public class ResultDAO {
             return new ArrayList<>();
         }
     }
+
+    public void saveResult(Result result) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(result);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateResult(Result result) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            session.update(result);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public List<Result> getResultsByStudentAndCourse(int studentId, int courseId) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery(
+                            "SELECT r FROM Result r " +
+                                    "JOIN FETCH r.registration reg " +
+                                    "JOIN FETCH reg.course c " +
+                                    "WHERE reg.student.id = :studentId " +
+                                    "AND reg.course.id = :courseId", Result.class)
+                    .setParameter("studentId", studentId)
+                    .setParameter("courseId", courseId)
+                    .getResultList();
+        }
+    }
+
+
+
+
 }

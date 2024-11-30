@@ -98,4 +98,13 @@ public class RegistrationDAO {
         }
     }
 
+    public Registration getRegistrationByStudentAndCourse(int studentId, int courseId) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Registration> query = session.createQuery("FROM Registration r WHERE r.student.id = :studentId AND r.course.id = :courseId", Registration.class);
+            query.setParameter("studentId", studentId);
+            query.setParameter("courseId", courseId);
+            return query.uniqueResult();
+        }
+    }
+
 }

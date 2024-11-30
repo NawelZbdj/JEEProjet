@@ -1,11 +1,14 @@
 package com.jeeproject.Controller;
 
 import com.jeeproject.DAO.AccountDAO;
+import com.jeeproject.DAO.CourseDAO;
 import com.jeeproject.DAO.StudentDAO;
 import com.jeeproject.Model.Account;
+import com.jeeproject.Model.Course;
 import com.jeeproject.Model.Student;
 import com.jeeproject.Utils.AccountUtils.PasswordGenerator;
 import com.jeeproject.Utils.AccountUtils.UsernameGenerator;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,11 +25,13 @@ import java.util.List;
 public class StudentController extends HttpServlet {
     private StudentDAO studentDAO;
     private AccountDAO accountDAO;
+    private CourseDAO courseDAO;
 
     @Override
     public void init() throws ServletException {
         studentDAO = new StudentDAO();
         accountDAO = new AccountDAO();
+        courseDAO = new CourseDAO();
     }
 
     @Override
@@ -70,6 +75,9 @@ public class StudentController extends HttpServlet {
                     break;
                 case "update":
                     updateStudent(request, response);
+                    break;
+                case "listByCourses":
+                    listStudentsByCourse(request, response);
                     break;
                 default:
                     break;
@@ -174,5 +182,20 @@ public class StudentController extends HttpServlet {
         List<Student> students = studentDAO.searchStudents(keyword);
         request.setAttribute("students", students);
         request.getRequestDispatcher("/views/admin/StudentsManagement.jsp").forward(request, response);
+    }
+
+
+    private void listStudentsByCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String courseId = request.getParameter("courseId");
+
+        List<Student> students = studentDAO.getStudentsByCourseId(Integer.parseInt(courseId));
+
+        request.setAttribute("students", students);
+
+        Course course = courseDAO.getCourseById(Integer.parseInt(courseId));
+        request.setAttribute("course", course);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/professor/ProfessorCourseStudents.jsp");
+        dispatcher.forward(request, response);
     }
 }

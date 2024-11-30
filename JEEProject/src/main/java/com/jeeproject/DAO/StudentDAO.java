@@ -90,4 +90,16 @@ public class StudentDAO {
             return null;
         }
     }
+
+    public List<Student> getStudentsByCourseId(int courseId) {
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Student> query = session.createQuery("SELECT s FROM Student s " + "JOIN Registration r ON s.id = r.student.id " + "WHERE r.course.id = :courseId", Student.class
+            );
+            query.setParameter("courseId", courseId);
+            return query.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

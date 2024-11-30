@@ -28,6 +28,17 @@ public class CourseDAO {
         }
     }
 
+    public List<Course> getCoursesByProfessorId(int professorId){
+
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query<Course> queryList = session.createQuery("SELECT c FROM Course c JOIN Registration r ON c.id = r.course.id WHERE r.professor.id = :professorId", Course.class);
+            queryList.setParameter("professorId", professorId);
+            return queryList.getResultList();
+        }catch (Exception e){
+            return null;
+        }
+    }
+
     public boolean updateCourse(Course course){
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();

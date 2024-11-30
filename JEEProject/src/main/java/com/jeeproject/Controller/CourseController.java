@@ -3,6 +3,7 @@ package com.jeeproject.Controller;
 import com.jeeproject.DAO.CourseDAO;
 import com.jeeproject.Model.Course;
 import com.jeeproject.Model.Student;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,6 +30,9 @@ public class CourseController extends HttpServlet {
             switch(action){
                 case "list":
                     listCourses(request,response);
+                    break;
+                case "listByProfessor":
+                    listCoursesByProfessor(request,response);
                     break;
                 case "edit":
                     showEditList(request,response);
@@ -123,6 +127,14 @@ public class CourseController extends HttpServlet {
         Course course = courseDAO.getCourseById(id);
         courseDAO.deleteCourse(course);
         response.sendRedirect(request.getContextPath() + "/views/admin/SubjectManagement.jsp");
+    }
+
+    private void listCoursesByProfessor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Ici faut recup l'ID du prof ( parametre session I guess)
+        List<Course> coursesList = courseDAO.getCoursesByProfessorId(1);
+        request.setAttribute("coursesList",coursesList);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/professor/ProfessorCourses.jsp");
+        dispatcher.forward(request, response);
     }
 
 }
