@@ -5,6 +5,7 @@ import com.jeeproject.Model.Course;
 import com.jeeproject.Model.Registration;
 import com.jeeproject.Model.Result;
 import com.jeeproject.Model.Student;
+import com.jeeproject.Utils.EmailUtil;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -127,6 +128,17 @@ public class ResultController extends HttpServlet {
         request.setAttribute("student", student);
         request.setAttribute("course", course);
         request.setAttribute("results", results);
+
+        String subject = "sColartiY :"+ course.getTitle() + " new grade:.";
+        String body = "Hello " + student.getFirstName() + ",\n\n" +
+                "A new grade has been registered in  "+ course.getTitle()+
+                "Grade : "+result.getGrade()+"\nCoefficient : "+result.getCoefficient()+".\n\n\nBest Regards,\nAdmin staff.";
+
+        try {
+            EmailUtil.sendEmail(student.getEmail(), subject, body);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //response.sendRedirect("ProfessorStudentGrades.jsp?studentId=" + studentId + "&courseId=" + courseId);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/professor/ProfessorStudentGrades.jsp?action=viewGrades&studentId=" + studentId + "&courseId=" + courseId);
