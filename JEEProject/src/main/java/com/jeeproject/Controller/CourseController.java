@@ -2,6 +2,7 @@ package com.jeeproject.Controller;
 
 import com.jeeproject.DAO.CourseDAO;
 import com.jeeproject.Model.Course;
+import com.jeeproject.Model.Professor;
 import com.jeeproject.Model.Student;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -9,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.List;
@@ -130,8 +132,10 @@ public class CourseController extends HttpServlet {
     }
 
     private void listCoursesByProfessor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Ici faut recup l'ID du prof ( parametre session I guess)
-        List<Course> coursesList = courseDAO.getCoursesByProfessorId(1);
+        HttpSession session = request.getSession();
+        Professor professor = (Professor)session.getAttribute("user");
+
+        List<Course> coursesList = courseDAO.getCoursesByProfessorId(professor.getId());
         request.setAttribute("coursesList",coursesList);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/professor/ProfessorCourses.jsp");
         dispatcher.forward(request, response);
