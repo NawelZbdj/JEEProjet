@@ -5,6 +5,7 @@ import com.jeeproject.DAO.CourseDAO;
 import com.jeeproject.DAO.StudentDAO;
 import com.jeeproject.Model.Account;
 import com.jeeproject.Model.Course;
+import com.jeeproject.Model.Professor;
 import com.jeeproject.Model.Student;
 import com.jeeproject.Utils.AccountUtils.PasswordGenerator;
 import com.jeeproject.Utils.AccountUtils.UsernameGenerator;
@@ -15,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -202,7 +204,10 @@ public class StudentController extends HttpServlet {
     private void listStudentsByCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String courseId = request.getParameter("courseId");
 
-        List<Student> students = studentDAO.getStudentsByCourseId(Integer.parseInt(courseId));
+        HttpSession session = request.getSession();
+        Professor professor = (Professor)session.getAttribute("user");
+
+        List<Student> students = studentDAO.getStudentsByCourseIdAndProfessorId(Integer.parseInt(courseId),professor.getId());
 
         request.setAttribute("students", students);
 

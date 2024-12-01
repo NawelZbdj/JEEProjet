@@ -1,8 +1,6 @@
 package com.jeeproject.DAO;
 
 import com.jeeproject.Model.Student;
-import com.jeeproject.Model.Student;
-import com.jeeproject.Utils.HibernateUtil;
 import com.jeeproject.Utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -91,12 +89,13 @@ public class StudentDAO {
         }
     }
 
-    public List<Student> getStudentsByCourseId(int courseId) {
+    public List<Student> getStudentsByCourseIdAndProfessorId(int courseId, int professorId) {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Student> query = session.createQuery("SELECT s FROM Student s " + "JOIN Registration r ON s.id = r.student.id " + "WHERE r.course.id = :courseId", Student.class
-            );
+            Query<Student> query = session.createQuery("SELECT DISTINCT s FROM Student s JOIN Registration r ON s.id = r.student.id " +
+                    "WHERE r.course.id = :courseId AND r.professor.id = :professorId", Student.class);
             query.setParameter("courseId", courseId);
+            query.setParameter("professorId", professorId);
             return query.getResultList();
         } catch (Exception e) {
             return null;
