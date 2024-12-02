@@ -33,6 +33,7 @@ public class ProfessorController extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         String action = request.getParameter("action");
+        //redirection to method by action
 
         try {
             switch (action) {
@@ -63,6 +64,7 @@ public class ProfessorController extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         String action = request.getParameter("action");
+        //redirection to method by action
 
         try {
             switch (action) {
@@ -81,18 +83,21 @@ public class ProfessorController extends HttpServlet {
     }
 
     private void listProfessors(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //retrieve all professors
         List<Professor> professors = professorDAO.getAllProfessors();
         request.setAttribute("professors", professors);
         request.getRequestDispatcher("/views/admin/ProfessorsManagement.jsp").forward(request, response);
     }
 
     private void addProfessor(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //get all request parameter values
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
         String specialty = request.getParameter("specialty");
         Date birthDate;
 
+        //attempt to formatt= the birthdate
         try {
             birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("birthDate"));
         } catch (ParseException e) {
@@ -126,6 +131,7 @@ public class ProfessorController extends HttpServlet {
         // Save Professor
         professorDAO.saveProfessor(professor);
 
+        //email the new professor
         String subject = "sColartiY : Account created !";
         String body = "Welcome " + professor.getFirstName() + ",\n\n" +
                 "You are now part of our teaching team in \n" + professor.getSpecialty() +
@@ -144,15 +150,18 @@ public class ProfessorController extends HttpServlet {
     }
 
     private void updateProfessor(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //get the professor by id in parameter
         int id = Integer.parseInt(request.getParameter("id"));
         Professor professor = professorDAO.getProfessorById(id);
 
+        //if the professor exits
         if (professor != null) {
             professor.setFirstName(request.getParameter("firstName"));
             professor.setLastName(request.getParameter("lastName"));
             professor.setEmail(request.getParameter("email"));
             professor.setSpecialty(request.getParameter("specialty"));
 
+            //try to format the birthdate
             try {
                 Date birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("birthDate"));
                 professor.setBirthDate(birthDate);
@@ -162,33 +171,48 @@ public class ProfessorController extends HttpServlet {
                 return;
             }
 
+            //update the teacher
             professorDAO.updateProfessor(professor);
         }
         response.sendRedirect("ProfessorController?action=list");
     }
 
     private void deleteProfessor(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //find the professor by id
         int id = Integer.parseInt(request.getParameter("id"));
-        professorDAO.deleteProfessor(id);
+        //attempt to delete the professor
+        try{
+            professorDAO.deleteProfessor(id);
+
+        }catch (Exception e){
+            response.sendRedirect("ProfessorController?action=list");
+        }
         response.sendRedirect("ProfessorController?action=list");
     }
 
     private void showAddForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //redirect to AddProfessor.jsp
         request.getRequestDispatcher("/views/admin/AddProfessor.jsp").forward(request, response);
     }
 
     private void showUpdateForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Retrieve the professor to edit
         int id = Integer.parseInt(request.getParameter("id"));
         Professor professor = professorDAO.getProfessorById(id);
+        //save the professor as a request attribute to pre-fill the edit form
         request.setAttribute("professor", professor);
+        //redirection based in the destination request parameter
         String destination = request.getParameter("destination");
         request.getRequestDispatcher(destination).forward(request,response);
     }
 
     private void searchProfessors(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //retrieve the search parameters
         String keyword = request.getParameter("keyword");
         String specialty = request.getParameter("specialty");
+        //search in the database
         List<Professor> professors = professorDAO.searchProfessors(keyword, specialty);
+        //save result as a request attribute
         request.setAttribute("professors", professors);
         request.getRequestDispatcher("/views/admin/ProfessorsManagement.jsp").forward(request, response);
     }

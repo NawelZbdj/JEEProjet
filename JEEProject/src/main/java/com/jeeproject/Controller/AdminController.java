@@ -40,6 +40,8 @@ public class AdminController extends HttpServlet {
         String action = request.getParameter("action");
         if (action == null) action = "list";
 
+
+        //redirection to method by action
         switch (action) {
             case "list":
                 listAdministrators(request, response);
@@ -78,18 +80,22 @@ public class AdminController extends HttpServlet {
     }
 
     private void listAdministrators(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //retrieve all administrators in database
         List<Administrator> administrators = administratorDAO.getAllAdministrators();
+        //set an attribute with admin
         request.setAttribute("administrators", administrators);
         request.getRequestDispatcher("/views/admin/AdminManagement.jsp").forward(request, response);
     }
 
     private void addAdministrator(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //retrieve all request parameters
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
         String position = request.getParameter("position");
         Date birthDate = null;
 
+        //try to format the birthdate
         try {
             birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("birthDate"));
         } catch (ParseException e) {
@@ -98,37 +104,38 @@ public class AdminController extends HttpServlet {
             return;
         }
 
-        // Generate username and password
+        //generate username and password
         String username = UsernameGenerator.generateUsername(firstName, lastName);
         String password = PasswordGenerator.generateRandomPassword();
 
-        // Create and save the Account entity
+        //create and save the Account entity
         Account adminAccount = new Account();
         adminAccount.setUsername(username);
         adminAccount.setPassword(password);
         adminAccount.setRole("admin");
 
-        // Save Account
+        //save Account
         accountDAO.saveAccount(adminAccount);
 
-        // Log the generated Account ID
+        //log the generated Account ID
         System.out.println("Account ID generated: " + adminAccount.getId());
 
-        // Create and associate the Administrator entity
+        //create and associate the Administrator entity
         Administrator admin = new Administrator();
         admin.setFirstName(firstName);
         admin.setLastName(lastName);
         admin.setEmail(email);
         admin.setPosition(position);
         admin.setBirthDate(birthDate);
-        admin.setAccount(adminAccount); // Associate Account with Administrator
+        admin.setAccount(adminAccount); //associate Account with Administrator
 
-        // Save Administrator
+        //save Administrator
         administratorDAO.saveAdministrator(admin);
 
-        // Log the Administrator details
+        //log the Administrator details
         System.out.println("Admin details saved: " + admin.toString());
 
+        //Send a mail to the new admin with his connection credentials
         String subject = "sColartiY : Account created !";
         String body = "Welcome " + admin.getFirstName() + ",\n\n" +
                 "You are now part of our staff as a \n" + admin.getPosition() +
@@ -140,22 +147,28 @@ public class AdminController extends HttpServlet {
         try {
             EmailUtil.sendEmail(admin.getEmail(), subject, body);
         } catch (Exception e) {
-            e.printStackTrace();
+            response.sendRedirect("AdminController?action=list");
         }
-        // Redirect to admin management page
+
+        //redirect to admin management page
         response.sendRedirect("AdminController?action=list");
     }
 
     private void updateAdministrator(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //get the id in request
         int id = Integer.parseInt(request.getParameter("id"));
+        //retrieve the admin by id
         Administrator admin = administratorDAO.getAdministratorById(id);
 
+        //if the admin exists
         if (admin != null) {
+            //update all his information
             admin.setFirstName(request.getParameter("firstName"));
             admin.setLastName(request.getParameter("lastName"));
             admin.setEmail(request.getParameter("email"));
             admin.setPosition(request.getParameter("position"));
 
+            //try to format the birthdate
             try {
                 Date birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("birthDate"));
                 admin.setBirthDate(birthDate);
@@ -165,6 +178,7 @@ public class AdminController extends HttpServlet {
                 return;
             }
 
+            //call the dao to update the database
             administratorDAO.updateAdministrator(admin);
         }
         response.sendRedirect("AdminController?action=list");
@@ -172,14 +186,24 @@ public class AdminController extends HttpServlet {
 
 
     private void deleteAdministrator(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //get the id
         int id = Integer.parseInt(request.getParameter("id"));
-        administratorDAO.deleteAdministrator(id);
+        //delete the admin
+        try{
+            administratorDAO.deleteAdministrator(id);
+        } catch (Exception e){
+            response.sendRedirect("AdminController?action=list");
+        }
         response.sendRedirect("AdminController?action=list");
     }
     private void showAddForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //redirection to AddAdmin.jsp
         request.getRequestDispatcher("/views/admin/AddAdmin.jsp").forward(request, response);
     }
+
+
     private void showUpdateForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //retrieve the admin to edit by id to pre-fill the edit form
         int id = Integer.parseInt(request.getParameter("id"));
         Administrator admin = administratorDAO.getAdministratorById(id);
         request.setAttribute("admin", admin);
@@ -188,10 +212,14 @@ public class AdminController extends HttpServlet {
 
 
     private void searchAdministrators(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //retrieve the search parameters
         String keyword = request.getParameter("keyword");
         String position = request.getParameter("position");
+        //perform the search in the database
         List<Administrator> administrators = administratorDAO.searchAdministrators(keyword, position);
+        //save result in a request attribute
         request.setAttribute("administrators", administrators);
+        //redirection to AdminManagement
         request.getRequestDispatcher("/views/admin/AdminManagement.jsp").forward(request, response);
     }
 }

@@ -61,22 +61,27 @@ public class AccountController extends HttpServlet {
     }
 
     private void loginByRole(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        //get the request parameters
         String username=request.getParameter("username");
         String password = request.getParameter("password");
         String role = request.getParameter("role");
 
+        //get the account by connection credentials
         Account account = accountDAO.getAccountByLogIn(username,password);
 
+        //get the current session
         HttpSession session = request.getSession();
 
+        //check that the role is not null
         if(role==null){
             request.getRequestDispatcher(request.getContextPath()+"/views/menu.jsp");
         }
         else {
-
+            //if the account exists make redirection to menu by role
             if (account != null) {
                 if (role.equals("admin")) {
                     Administrator admin = administratorDAO.getAdminByAccountId(account.getId());
+                    //keep the account as an attribute scope session
                     session.setAttribute("user", admin);
                     session.setAttribute("role", role);
                     response.sendRedirect( "views/admin/AdminMenu.jsp");
@@ -94,15 +99,15 @@ public class AccountController extends HttpServlet {
                     response.sendRedirect("views/student/StudentMenu.jsp");
                 }
             } else {
+                //if the account does not exist
                 request.setAttribute("errorMessage", "Unknown username or password.");
-                //request.getRequestDispatcher(request.getHeader("Referer")).forward(request, response);
 
 
                 //redirection previous page
                 if(role.equals("student")) {
-                    request.getRequestDispatcher(request.getContextPath()+"/views/student/logStudent.jsp").forward(request, response);
+                    request.getRequestDispatcher("/views/student/logStudent.jsp").forward(request, response);
                 } else if(role.equals("professor")) {
-                    request.getRequestDispatcher(request.getContextPath()+"/views/professor/logProfessor.jsp").forward(request, response);
+                    request.getRequestDispatcher("/views/professor/logProfessor.jsp").forward(request, response);
 
                 } else if(role.equals("admin")) {
                     request.getRequestDispatcher("/views/admin/logAdmin.jsp").forward(request, response);

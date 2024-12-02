@@ -37,7 +37,7 @@ public class ResultController extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException{
         String action = request.getParameter("action");
-
+        //redirection to method by action
         try{
             switch(action){
                 case "listByStudent":
@@ -54,7 +54,7 @@ public class ResultController extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException{
         String action = request.getParameter("action");
-
+        //redirection to method by action
         try{
             switch(action){
                 case "viewGrades":
@@ -75,27 +75,33 @@ public class ResultController extends HttpServlet {
     }
 
     private void getResultsByStudentId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //get current user's information
         HttpSession session = request.getSession();
-
         Student student = (Student)session.getAttribute("user");
+
+        //get results by student id
         List<Result> resultsList = resultDAO.getResultsByStudentId(student.getId());
         request.setAttribute("results",resultsList);
 
+        //redirect to jsp based on the destination request parameter
         String destination = request.getParameter("destination");
         request.getRequestDispatcher(destination).forward(request,response);
     }
 
     private void viewGrades(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-
+        //retrieve ids from the request parameters
         int studentId = Integer.parseInt(request.getParameter("studentId"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));
 
+        //get Student by id
         Student student = studentDAO.getStudentById(studentId);
         request.setAttribute("student", student);
 
+        //get course by id
         Course course = courseDAO.getCourseById(courseId);
         request.setAttribute("course", course);
 
+        //get all results by Student and Course
         List<Result> results = resultDAO.getResultsByStudentAndCourse(studentId, courseId);
         request.setAttribute("results", results);
 
@@ -105,6 +111,7 @@ public class ResultController extends HttpServlet {
 
 
     private void addGrade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //retrieve ids from the request parameters
         int studentId = Integer.parseInt(request.getParameter("studentId"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));
 
@@ -113,11 +120,13 @@ public class ResultController extends HttpServlet {
         double coefficient = 1.0;
 
 
+        //create new result
         Result result = new Result();
         result.setGrade(grade);
         result.setCoefficient(coefficient);
         result.setRegistration(registrationDAO.getRegistrationByStudentAndCourse(studentId,courseId));
 
+        //save the result
         resultDAO.saveResult(result);
 
 
@@ -135,9 +144,11 @@ public class ResultController extends HttpServlet {
     }
 
     private void saveGrades(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //retrieve ids from the request parameters
         int studentId = Integer.parseInt(request.getParameter("studentId"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));
 
+        //retrieve information from the request parameters
         String[] grades = request.getParameterValues("grades");
         String[] coefficients = request.getParameterValues("coefficients");
         String[] resultIds =  request.getParameterValues("resultIds");
@@ -160,7 +171,7 @@ public class ResultController extends HttpServlet {
                     result.setCoefficient(coefficient);
                     result.setRegistration(registration);
 
-
+                    //update the result
                     resultDAO.updateResult(result);
                 }
 

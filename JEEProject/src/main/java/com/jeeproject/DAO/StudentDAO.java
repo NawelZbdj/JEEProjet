@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 
 public class StudentDAO {
 
+    //add a new student in the database
     public void saveStudent(Student student) {
         Transaction transaction = null;
         try (Session session = com.jeeproject.Utils.HibernateUtil.getSessionFactory().openSession()) {
@@ -22,6 +23,7 @@ public class StudentDAO {
         }
     }
 
+    //get a student by id
     public Student getStudentById(int id) {
         try (Session session = com.jeeproject.Utils.HibernateUtil.getSessionFactory().openSession()) {
             return session.get(Student.class, id);
@@ -31,6 +33,7 @@ public class StudentDAO {
         }
     }
 
+    //get all students
     public List<Student> getAllStudents() {
         try (Session session = com.jeeproject.Utils.HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from Student", Student.class).list();
@@ -40,6 +43,7 @@ public class StudentDAO {
         }
     }
 
+    //update a student in the database
     public void updateStudent(Student student) {
         Transaction transaction = null;
         try (Session session = com.jeeproject.Utils.HibernateUtil.getSessionFactory().openSession()) {
@@ -52,6 +56,7 @@ public class StudentDAO {
         }
     }
 
+    //delete student in the database
     public void deleteStudent(int id) {
         Transaction transaction = null;
         try (Session session = com.jeeproject.Utils.HibernateUtil.getSessionFactory().openSession()) {
@@ -65,6 +70,7 @@ public class StudentDAO {
         }
     }
 
+    //search for students by a keyword in their first name or last name
     public List<Student> searchStudents(String keyword) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "from Student p where (p.firstName like :keyword or p.lastName like :keyword)";
@@ -79,6 +85,7 @@ public class StudentDAO {
         }
     }
 
+    //get a student by their account id
     public Student getStudentByAccountId(int accountId){
         try(Session session = com.jeeproject.Utils.HibernateUtil.getSessionFactory().openSession()){
             Query<Student> query = session.createQuery("SELECT s FROM Student s WHERE s.account.id = :accountId ",Student.class);
@@ -89,6 +96,7 @@ public class StudentDAO {
         }
     }
 
+    //get students enrolled in a specific course taught by a specific professor
     public List<Student> getStudentsByCourseIdAndProfessorId(int courseId, int professorId) {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

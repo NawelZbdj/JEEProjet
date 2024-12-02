@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS Account (
 
 
 CREATE TABLE IF NOT EXISTS Administrator (
-                                             id INT PRIMARY KEY,
+                                             id INT AUTO_INCREMENT PRIMARY KEY,
                                              last_name VARCHAR(100),
                                              first_name VARCHAR(100),
                                              birth_date DATE,
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS Administrator (
 
 
 CREATE TABLE IF NOT EXISTS Professor (
-                                         id INT PRIMARY KEY,
+                                         id INT AUTO_INCREMENT PRIMARY KEY,
                                          last_name VARCHAR(100),
                                          first_name VARCHAR(100),
                                          birth_date DATE,
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS Professor (
 
 
 CREATE TABLE IF NOT EXISTS Student (
-                                       id INT PRIMARY KEY,
+                                       id INT AUTO_INCREMENT PRIMARY KEY,
                                        last_name VARCHAR(100),
                                        first_name VARCHAR(100),
                                        birth_date DATE,

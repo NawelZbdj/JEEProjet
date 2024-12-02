@@ -12,6 +12,7 @@ import java.util.List;
 
 public class ProfessorDAO {
 
+    //Add a new professor to the database
     public void saveProfessor(Professor professor) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -24,6 +25,7 @@ public class ProfessorDAO {
         }
     }
 
+    //get prof by id
     public Professor getProfessorById(int id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.get(Professor.class, id);
@@ -33,6 +35,7 @@ public class ProfessorDAO {
         }
     }
 
+    //get all professors
     public List<Professor> getAllProfessors() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from Professor", Professor.class).list();
@@ -42,6 +45,7 @@ public class ProfessorDAO {
         }
     }
 
+    //get a professor by their accountId
     public Professor getProfessorByAccountId(int accountId){
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             Query<Professor> query = session.createQuery("SELECT p FROM Professor p WHERE p.account.id = :accountId ",Professor.class);
@@ -52,6 +56,7 @@ public class ProfessorDAO {
         }
     }
 
+    //update the professor's information
     public void updateProfessor(Professor professor) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -64,6 +69,7 @@ public class ProfessorDAO {
         }
     }
 
+    //delete a professor
     public void deleteProfessor(int id) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -77,6 +83,7 @@ public class ProfessorDAO {
         }
     }
 
+    //search for professors by keyword and optional specialty
     public List<Professor> searchProfessors(String keyword, String specialty) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "from Professor p where (p.firstName like :keyword or p.lastName like :keyword)";

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class RegistrationDAO {
 
-    //get all registrations
+        //Get all registrations from the database, including associated courses, professors, and students
     public List<Registration> getAllRegistrations(){
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
         //Query<Registration> query = session.createQuery("FROM Registration", Registration.class);
@@ -26,6 +26,7 @@ public class RegistrationDAO {
         }
     }
 
+    //update a registration
     public boolean updateRegistration(Registration registration){
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();
@@ -37,6 +38,7 @@ public class RegistrationDAO {
         }
     }
 
+    //get a registration by id, with related entities
     public Registration getRegistrationById(int id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Registration> query = session.createQuery("SELECT r FROM Registration r " +
@@ -53,6 +55,7 @@ public class RegistrationDAO {
         }
     }
 
+    //get all registrations for a specific student by student id
     public List<Registration> getRegistrationsByStudent(int studentId){
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             Query<Registration> query = session.createQuery("SELECT r FROM Registration r " +
@@ -68,6 +71,7 @@ public class RegistrationDAO {
         }
     }
 
+    //Delete registration
     public boolean deleteRegistration(Registration registration){
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();
@@ -81,6 +85,7 @@ public class RegistrationDAO {
         }
     }
 
+    //Save a new registration in the database
     public boolean saveRegistration(Registration registration){
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();
@@ -92,6 +97,7 @@ public class RegistrationDAO {
         }
     }
 
+    //get all registrations for a specific professor by their professor id
     public List<Registration> getRegistrationsByProfessor(int professorId){
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             Query<Registration> query = session.createQuery("SELECT r FROM Registration r " +
@@ -106,6 +112,7 @@ public class RegistrationDAO {
         }
     }
 
+    //get a registration for a student and a specific course
     public Registration getRegistrationByStudentAndCourse(int studentId, int courseId) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Registration> query = session.createQuery("FROM Registration r WHERE r.student.id = :studentId AND r.course.id = :courseId", Registration.class);

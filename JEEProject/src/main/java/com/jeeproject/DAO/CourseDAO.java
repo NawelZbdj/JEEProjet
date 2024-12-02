@@ -20,6 +20,7 @@ public class CourseDAO {
         }
     }
 
+    //get course by id
     public Course getCourseById(int id){
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             return session.get(Course.class,id);
@@ -28,6 +29,7 @@ public class CourseDAO {
         }
     }
 
+    //get courses assigned to a professor
     public List<Course> getCoursesByProfessorId(int professorId){
 
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
@@ -39,6 +41,7 @@ public class CourseDAO {
         }
     }
 
+    //update a course
     public boolean updateCourse(Course course){
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();
@@ -50,6 +53,7 @@ public class CourseDAO {
         }
     }
 
+    //add a new course to the database
     public boolean saveCourse(Course course){
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();
@@ -61,6 +65,7 @@ public class CourseDAO {
         }
     }
 
+    //delete a course
     public boolean deleteCourse(Course course){
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();

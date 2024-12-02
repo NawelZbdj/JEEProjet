@@ -80,6 +80,10 @@
     </thead>
     <tbody>
     <%
+        if(request.getAttribute("administrators") == null) {
+            response.sendRedirect(request.getContextPath() + "/AdminController?action=list");
+        }
+        else{
         List<Administrator> administrators = (List<Administrator>) request.getAttribute("administrators");
 
         if (administrators != null && !administrators.isEmpty()) {
@@ -104,6 +108,7 @@
         <td colspan="6">No administrators found.</td>
     </tr>
     <%
+        }
         }
     %>
     </tbody>

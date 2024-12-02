@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultDAO {
+
+    //get all results with associated registration, course, professor, and student
     public List<Result> getAllResults() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Result> query = session.createQuery("SELECT res FROM Result res " +
@@ -24,6 +26,7 @@ public class ResultDAO {
         }
     }
 
+    //get all results for a specific student by their student id
     public List<Result> getResultsByStudentId(int studentId) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Result> query = session.createQuery(
@@ -41,6 +44,7 @@ public class ResultDAO {
         }
     }
 
+    //add a new result in the database
     public void saveResult(Result result) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -51,6 +55,7 @@ public class ResultDAO {
         }
     }
 
+    //update a result in the database
     public void updateResult(Result result) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -63,7 +68,7 @@ public class ResultDAO {
     }
 
 
-
+    //get results for a specific student and a specific course
     public List<Result> getResultsByStudentAndCourse(int studentId, int courseId) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery(
@@ -77,8 +82,6 @@ public class ResultDAO {
                     .getResultList();
         }
     }
-
-
 
 
 }

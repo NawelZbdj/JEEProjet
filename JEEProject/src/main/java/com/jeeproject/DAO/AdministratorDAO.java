@@ -11,6 +11,8 @@ import java.util.List;
 
 public class AdministratorDAO {
 
+
+    //save a new admin in the database
     public void saveAdministrator(Administrator administrator) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -23,6 +25,7 @@ public class AdministratorDAO {
         }
     }
 
+    //get admin by id
     public Administrator getAdministratorById(int id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.get(Administrator.class, id);
@@ -32,6 +35,7 @@ public class AdministratorDAO {
         }
     }
 
+    //get all admin from database
     public List<Administrator> getAllAdministrators() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from Administrator", Administrator.class).list();
@@ -41,6 +45,7 @@ public class AdministratorDAO {
         }
     }
 
+    //update an administrator's information
     public void updateAdministrator(Administrator administrator) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -53,6 +58,7 @@ public class AdministratorDAO {
         }
     }
 
+    //delete an administrator by id
     public void deleteAdministrator(int id) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -65,6 +71,8 @@ public class AdministratorDAO {
             e.printStackTrace();
         }
     }
+
+    //search administrators based on a keyword and optional position
     public List<Administrator> searchAdministrators(String keyword, String position) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "from Administrator a where (a.firstName like :keyword or a.lastName like :keyword)";
@@ -83,6 +91,7 @@ public class AdministratorDAO {
         }
     }
 
+    //get the administrator associated with an account id
     public Administrator getAdminByAccountId(int accountId){
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             Query<Administrator> query = session.createQuery("SELECT a FROM Administrator a WHERE a.account.id = :accountId ",Administrator.class);

@@ -41,6 +41,7 @@ public class StudentController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         String action = request.getParameter("action");
 
+        //redirect to method based on the action request parameter
         try {
             switch (action) {
                 case "list":
@@ -71,6 +72,7 @@ public class StudentController extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         String action = request.getParameter("action");
 
+        //redirect to method based on the action request parameter
         try {
             switch (action) {
                 case "add":
@@ -91,17 +93,22 @@ public class StudentController extends HttpServlet {
     }
 
     private void listStudents(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //get all students
         List<Student> students = studentDAO.getAllStudents();
+        //save as a request attribute
         request.setAttribute("students", students);
+        //redirect to StudentsManagement.jsp
         request.getRequestDispatcher("/views/admin/StudentsManagement.jsp").forward(request, response);
     }
 
     private void addStudent(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //retrieve all request parameters
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
         Date birthDate;
 
+        //try to format the birthdate
         try {
             birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("birthDate"));
         } catch (ParseException e) {
@@ -134,6 +141,7 @@ public class StudentController extends HttpServlet {
         // Save Student
         studentDAO.saveStudent(student);
 
+        //email to the student
         String subject = "sColartiY : Account created !";
         String body = "Welcome " + student.getFirstName() + ",\n\n" +
                 "You are now part of our school. \n" +
@@ -152,15 +160,17 @@ public class StudentController extends HttpServlet {
     }
 
     private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //get student by id from the request parameter
         int id = Integer.parseInt(request.getParameter("id"));
         Student student = studentDAO.getStudentById(id);
 
         if (student != null) {
+            //update information
             student.setFirstName(request.getParameter("firstName"));
             student.setLastName(request.getParameter("lastName"));
             student.setEmail(request.getParameter("email"));
 
-
+            //try to format the birthdate
             try {
                 Date birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("birthDate"));
                 student.setBirthDate(birthDate);
@@ -170,50 +180,71 @@ public class StudentController extends HttpServlet {
                 return;
             }
 
+            //update the student
             studentDAO.updateStudent(student);
         }
         response.sendRedirect("StudentController?action=list");
     }
 
     private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //find the student to delete
         int id = Integer.parseInt(request.getParameter("id"));
-        studentDAO.deleteStudent(id);
+        try{
+            studentDAO.deleteStudent(id);
+        }catch (Exception e){
+            response.sendRedirect("StudentController?action=list");
+        }
         response.sendRedirect("StudentController?action=list");
     }
 
     private void showAddForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //redirect to AddStudent.jsp
         request.getRequestDispatcher("/views/admin/AddStudent.jsp").forward(request, response);
     }
 
     private void showUpdateForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //find the student to update
         int id = Integer.parseInt(request.getParameter("id"));
         Student student = studentDAO.getStudentById(id);
+        //save it as a request attribute
         request.setAttribute("student", student);
+        //redirect to jsp based on the destination request parameter
         String destination = request.getParameter("destination");
         request.getRequestDispatcher(destination).forward(request,response);
     }
 
     private void searchStudents(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //retrieve search parameter
         String keyword = request.getParameter("keyword");
+        //search in database
         List<Student> students = studentDAO.searchStudents(keyword);
+        //save the result as a request attribute
         request.setAttribute("students", students);
+        //redirect to StudentsManagement.jsp
         request.getRequestDispatcher("/views/admin/StudentsManagement.jsp").forward(request, response);
     }
 
 
     private void listStudentsByCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //get the id of course from the request parameter
         String courseId = request.getParameter("courseId");
 
+        //get current user's information
         HttpSession session = request.getSession();
         Professor professor = (Professor)session.getAttribute("user");
 
+        //get Students by course id and professor id
         List<Student> students = studentDAO.getStudentsByCourseIdAndProfessorId(Integer.parseInt(courseId),professor.getId());
 
+        //save as request attribute
         request.setAttribute("students", students);
 
+        //get course by id
         Course course = courseDAO.getCourseById(Integer.parseInt(courseId));
+        //save as request attribute
         request.setAttribute("course", course);
 
+        //Redirect to ProfessorCourseStudents.jsp
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/professor/ProfessorCourseStudents.jsp");
         dispatcher.forward(request, response);
     }

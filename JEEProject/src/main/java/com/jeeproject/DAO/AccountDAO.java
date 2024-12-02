@@ -9,6 +9,8 @@ import org.hibernate.*;
 import org.hibernate.query.Query;
 
 public class AccountDAO {
+
+    //Save a new account in the database
     public void saveAccount(Account account) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -28,12 +30,14 @@ public class AccountDAO {
         }
     }
 
+    //get all usernames from the account table
     public static List<String> getAllUsernames() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("SELECT username FROM Account", String.class).list();
         }
     }
 
+    //get an account based on username and password for login
     public Account getAccountByLogIn(String username,String password){
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
             Query<Account> query = session.createQuery("SELECT a FROM Account a WHERE a.username = :username AND a.password = :password",Account.class);
