@@ -1,4 +1,4 @@
-script de la database dans  JEEProjet/database
+script de la database dans  JEEProject/database
      
       échantillon de départ dans le script sample.sql
 
