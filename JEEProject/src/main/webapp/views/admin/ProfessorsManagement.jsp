@@ -59,6 +59,11 @@
         <option value="">All</option>
         <option value="computerScience">Computer Science</option>
         <option value="Art">Art</option>
+        <option value="Physics">Physics</option>
+        <option value="Mathematics">Mathematics</option>
+        <option value="Chemistry">Chemistry</option>
+        <option value="History">History</option>
+        <option value="English">History</option>
     </select>
     <button type="submit">Search</button>
 </form>

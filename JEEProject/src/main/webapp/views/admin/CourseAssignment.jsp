@@ -135,7 +135,7 @@
             <form action="<%= request.getContextPath() + "/RegistrationController?action=multiupdate" %>" method="post">
             <td>
                 <select name="idProfessor">
-                    <option value="">Select a professor</option>
+                    <option value="0">Select a professor</option>
                     <%
                         List<Professor> professorsOfCurrentSpeciality = professorBySpeciality.get(currentSpeciality);
                         if (professorsOfCurrentSpeciality != null) {

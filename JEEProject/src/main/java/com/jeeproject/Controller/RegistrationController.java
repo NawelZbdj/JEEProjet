@@ -102,6 +102,10 @@ public class RegistrationController extends HttpServlet {
 
         if( request.getParameter("idProfessor") !=  null){
             int professorId = Integer.parseInt(request.getParameter("idProfessor"));
+            if(professorId==0){
+                response.sendRedirect(request.getContextPath() + "/RegistrationController?action=listall&destination=/views/admin/CourseAssignment.jsp");
+
+            }
             Professor professor = professorDAO.getProfessorById(professorId);
 
             String[] registrationIds = request.getParameterValues("registrationsList");
