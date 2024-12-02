@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.jeeproject.Model.Student" table="Student">
+        <id name="id" column="id" type="int">
+            <generator class="increment"/>
+        </id>
+        <property name="lastName" column="last_name" type="string" length="100"/>
+        <property name="firstName" column="first_name" type="string" length="100"/>
+        <property name="birthDate" column="birth_date" type="date"/>
+        <property name="email" column="email" type="string" length="100"/>
+
+        <many-to-one name="account" class="com.jeeproject.Model.Account" column="account_id" cascade="save-update"/>
+    </class>
+</hibernate-mapping>

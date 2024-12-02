@@ -10,7 +10,7 @@ public class Administrator implements IUser{
     private Date birthDate;
     private String position;
     private String email;
-
+    private Account account;
 
     public Administrator(){
 
@@ -47,6 +47,10 @@ public class Administrator implements IUser{
         return email;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
 
     //Setters
     @Override
@@ -77,6 +81,11 @@ public class Administrator implements IUser{
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
 
 
 }

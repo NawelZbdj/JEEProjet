@@ -7,6 +7,7 @@ public class Student implements IUser{
     private String firstName;
     private Date birthDate;
     private String email;
+    private Account account;
 
     public Student(){
     }
@@ -36,6 +37,10 @@ public class Student implements IUser{
     public String getEmail(){
         return email;
     }
+    public Account getAccount() {
+        return account;
+    }
+
 
     //Setters
     @Override
@@ -62,4 +67,9 @@ public class Student implements IUser{
     public void setEmail(String email){
         this.email = email;
     }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
 }
