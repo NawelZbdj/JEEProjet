@@ -117,7 +117,7 @@
             <td><b><%=course.getTitle()%></b></td>
             <td><%=course.getCredit()%></td>
             <%
-                Professor professor = resultsList.get(1).getRegistration().getProfessor();
+                Professor professor = resultsList.get(0).getRegistration().getProfessor();
                 if(professor != null){
             %>
                     <td><%=professor.getFirstName()%> <%=professor.getLastName()%></td>

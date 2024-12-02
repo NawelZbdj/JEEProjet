@@ -63,7 +63,7 @@
         <option value="Mathematics">Mathematics</option>
         <option value="Chemistry">Chemistry</option>
         <option value="History">History</option>
-        <option value="English">History</option>
+        <option value="English">English</option>
     </select>
     <button type="submit">Search</button>
 </form>
